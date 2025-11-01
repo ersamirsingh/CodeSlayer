@@ -3,8 +3,7 @@ import redis from 'redis'
 
 
 const redisClient = redis.createClient({
-
-   username: 'default',
+    username: 'default',
    password:process.env.REDIS_PASS,
    socket: {
       host: process.env.REDIS_HOST,
@@ -13,5 +12,5 @@ const redisClient = redis.createClient({
 });
 
 
-export default redisClient
+export default redisClient;
 
