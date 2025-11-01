@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pymongo[srv]
+python-dotenv
+requests
+langchain
+faiss-cpu
+sentence-transformers
+numpy
