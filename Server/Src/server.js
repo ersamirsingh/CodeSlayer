@@ -5,7 +5,7 @@ dotenv.config()
 import main from './config/db.js'
 import redisClient from './config/Redis.js'
 import cors from 'cors'
-// import cors from 'cors'
+import authRouter from './Router/AuthRouter.js'
 
 
 app.use(express.json())
@@ -18,7 +18,7 @@ app.use(cors({
 }))
 
 
-// app.use('/auth', authRouter)
+app.use('/auth', authRouter)
 
 
 
