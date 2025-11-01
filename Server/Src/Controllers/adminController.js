@@ -1,6 +1,6 @@
-import Dispute from "../Models/Dispute";
-import Job from "../Models/Job";
-import User from "../Models/User"
+import Dispute from "../Models/Dispute.js";
+import Job from "../Models/Job.js";
+import User from "../Models/User.js"
 
 
 export const overview = async (req, res, next) => {

@@ -73,7 +73,7 @@ const Register = async (req, res) => {
          contact: user.contact,
          role: user.role,
       });
-      
+
    } catch (error) {
       return res.status(500).json({
          message: 'Internal server error',
@@ -105,8 +105,6 @@ const Login = async (req, res) => {
          });
       }
 
-      console.log('sam')
-
       const isMatched = await bcrypt.compare(password, user?.password);
       if (!isMatched) {
          return res.status(401).json({ 
@@ -115,7 +113,6 @@ const Login = async (req, res) => {
          });
       }
 
-      console.log('sam1')
 
       if (!process.env.SECRET_KEY || !process.env.JWT_EXP) {
          throw new Error('JWT configuration missing');
@@ -186,94 +183,6 @@ const Logout = async (req, res) => {
    }
 };
 
-const DeleteUser = async (req, res) => {
-   try {
-      const { Token } = req.cookies;
-
-      if (!Token) {
-            return res.status(401).json({
-            message: 'Authentication token missing',
-         });
-      }
-
-      const user = await User.findById(req.user?._id);
-      console.log(user);
-      if (!user) {
-            return res.status(404).json({
-            message: 'User not found',
-         });
-      }
-
-      await User.findByIdAndDelete(req.user._id);
-
-      const payload = jwt.decode(Token);
-      await redisClient.set(`Token: ${Token}`, 'Blocked');
-      await redisClient.expireAt(`Token: ${Token}`, payload.exp);
-
-      res.clearCookie('Token');
-      return res.status(200).json({
-         message: 'User deleted successfully',
-      });
-   } catch (error) {
-      return res.status(500).json({
-         message: 'Failed to delete user',
-         error: error.message,
-      });
-   }
-};
-
-const fetchUser = async (req, res) => {
-   try {
-      const { firstName, lastName, emailId, contact, role } = req.user;
-      res.status(200).json({
-         firstName,
-         lastName,
-         emailId,
-         contact,
-         role,
-      });
-   } catch (error) {
-      res.status(500).json({
-         message: error.message,
-      });
-   }
-};
-
-
-const updateUser = async (req, res) => {
-   try {
-      // console.log(req.body)
-
-      const { emailId, contact } = req.body;
-      if (emailId) throw new Error('Email is immutable');
-
-      if (contact) throw new Error('Contact is immutable');
-
-      const user = await User.findByIdAndUpdate(req.user?._id, req.body, {
-         runValidators: true,
-         new: true,
-      });
-
-      if(!user)
-         return res.status(404).json({
-            message: 'User not found'
-         })
-         
-      res.status(200).json({
-         firstName: user.firstName,
-         lastName: user.lastName,
-         emailId: user.emailId,
-         contact: user.contact,
-         role: user.role,
-      });
-   } catch (error) {
-      res.status(400).json({
-         message: error.message,
-      });
-   }
-};
-
-
 
 const validUser = async (req, res)=>{
 
@@ -293,4 +202,4 @@ const validUser = async (req, res)=>{
 }
 
 
-export { Register, Login, Logout, DeleteUser, fetchUser, updateUser, validUser };
+export { Register, Login, Logout, validUser };
