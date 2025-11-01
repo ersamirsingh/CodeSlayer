@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 import main from './config/db.js'
 import redisClient from './config/Redis.js'
+import cors from 'cors'
 // import cors from 'cors'
 
 
@@ -26,11 +27,10 @@ const InitializeConnection = async ()=>{
     try {
         // console.log(process.env.PORT)
 
-        await Promise.all([main()])
+        await Promise.all([main(), redisClient.connect()])
         console.log('DB connected successfully.')
        
 
-        console.log('Redis connected successfully.')
         app.listen(process.env.PORT, ()=>{
             console.log('Listening at PORT', process.env.PORT)
         })
