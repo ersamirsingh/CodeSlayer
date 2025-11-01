@@ -1,11 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Bell, Menu, X, User, LogOut, Settings, Home as HomeIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../store/authSlice";
+
 
 export default function Home({ userName = "Nitish", onLogout = () => {}, onNavigate = (path) => {} }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef();
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  
+
+  const handleLogout =()=>{
+    setMobileOpen(false)
+    dispatch(logoutUser())
+  }
 
 
   useEffect(() => {
@@ -37,7 +48,7 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate("/")}>
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
               <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg">
                 KS
               </div>
@@ -50,13 +61,13 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
 
           {/* Middle: optional nav (hidden on small screens) */}
           <nav className="hidden md:flex md:items-center md:space-x-6">
-            <Link to="/jobs" onClick={() => onNavigate("/jobs")} className="text-sm text-gray-700 hover:text-indigo-600">
+            <Link to="/jobs" onClick={() => navigate("/jobs")} className="text-sm text-gray-700 hover:text-indigo-600">
               Jobs
             </Link>
-            <Link to="/applications" onClick={() => onNavigate("/applications")} className="text-sm text-gray-700 hover:text-indigo-600">
+            <Link to="/applications" onClick={() => navigate("/applications")} className="text-sm text-gray-700 hover:text-indigo-600">
               Applications
             </Link>
-            <Link to="/disputes" onClick={() => onNavigate("/disputes")} className="text-sm text-gray-700 hover:text-indigo-600">
+            <Link to="/disputes" onClick={() => navigate("/disputes")} className="text-sm text-gray-700 hover:text-indigo-600">
               Disputes
             </Link>
           </nav>
@@ -66,7 +77,7 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
             <button
               className="relative p-2 rounded-md hover:bg-gray-100"
               aria-label="Notifications"
-              onClick={() => onNavigate("/notifications")}
+              onClick={() => navigate("/notifications")}
             >
               <Bell className="w-5 h-5 text-gray-700" />
               <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold bg-red-600 text-white rounded-full">
@@ -98,14 +109,14 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
                   className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50"
                 >
                   <button
-                    onClick={() => { setProfileOpen(false); onNavigate("/profile"); }}
+                    onClick={() => { setProfileOpen(false); navigate("/profile"); }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                   >
                     <User className="w-4 h-4" /> Profile
                   </button>
 
                   <button
-                    onClick={() => { setProfileOpen(false); onNavigate("/settings"); }}
+                    onClick={() => { setProfileOpen(false); navigate("/settings"); }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                   >
                     <Settings className="w-4 h-4" /> Settings
@@ -129,17 +140,17 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
         {mobileOpen && (
           <div className="md:hidden mt-2 pb-4 border-t">
             <div className="flex flex-col gap-2 pt-3">
-              <button onClick={() => { setMobileOpen(false); onNavigate("/jobs"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Jobs</button>
-              <button onClick={() => { setMobileOpen(false); onNavigate("/applications"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Applications</button>
-              <button onClick={() => { setMobileOpen(false); onNavigate("/disputes"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Disputes</button>
+              <button onClick={() => { setMobileOpen(false); navigate("/jobs"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Jobs</button>
+              <button onClick={() => { setMobileOpen(false); navigate("/applications"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Applications</button>
+              <button onClick={() => { setMobileOpen(false); navigate("/disputes"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Disputes</button>
               <div className="pt-2 border-t">
-                <button onClick={() => { setMobileOpen(false); onNavigate("/profile"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
+                <button onClick={() => { setMobileOpen(false); navigate("/profile"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
                   <User className="w-4 h-4" /> Profile
                 </button>
-                <button onClick={() => { setMobileOpen(false); onNavigate("/settings"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
+                <button onClick={() => { setMobileOpen(false); navigate("/settings"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
                   <Settings className="w-4 h-4" /> Settings
                 </button>
-                <button onClick={() => { setMobileOpen(false); onLogout(); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2 text-red-600">
+                <button onClick={() => {handleLogout()}} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2 text-red-600">
                   <LogOut className="w-4 h-4" /> Logout
                 </button>
               </div>

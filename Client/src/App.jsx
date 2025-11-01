@@ -23,7 +23,7 @@ import {
 function App() {
 
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = useSelector(state=>state.auth);
+  const { isAuthenticated } = useSelector(state=>state.auth);
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -32,19 +32,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        {/* <Route
-          path="/"
-          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
-        ></Route> */}
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/employplatform" /> : <Login />}
-        ></Route>
+        <Route path="/" element={<Landing />}></Route>
+       
+        
         <Route
           path="/signup"
-          element={isAuthenticated ? <Navigate to="/login" /> : <Signup />}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
         ></Route>
+        <Route
+          path="/home"
+          element={isAuthenticated ? <Home/> : <Signup />}
+        ></Route>
+
         <Route
           path="/how"
           element={<How/>}
@@ -67,7 +66,7 @@ function App() {
         ></Route>
         <Route
           path="/profile"
-          element={<Profile/>}
+          element={isAuthenticated ? <Profile/> : <Navigate to="/login" />}
         ></Route>
       </Routes>
     </Router>
