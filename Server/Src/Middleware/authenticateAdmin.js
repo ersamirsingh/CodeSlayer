@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
-import User from '../Models/User'
-import redisClient from '../config/Redis'
+import User from '../Models/User.js'
+import redisClient from '../config/Redis.js'
 
 
 const authenticateAdmin = async (req, res, next)=>{

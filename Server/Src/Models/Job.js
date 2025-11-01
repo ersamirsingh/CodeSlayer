@@ -6,13 +6,13 @@ const jobSchema = new mongoose.Schema({
     wage: Number,
     skills: [String],
     employer: {
-        type: mongoose.Schema.types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     },
     applicant: [{
-        type: mongoose.Schema.types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }],
     assignedLaborer: {
-        type: mongoose.Schema.types.ObjectId, ref: 'User'
+        type: mongoose.Schema.Types.ObjectId, ref: 'User'
     },
     status: {
         type: String,

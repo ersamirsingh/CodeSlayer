@@ -1,7 +1,5 @@
 import express from 'express'
 const userRouter = express.Router()
-import { getUserDetails } from '../Controllers/adminController.js'
-import authenticateAdmin from '../Middleware/authenticateAdmin.js'
 import authenticateUser from '../Middleware/authenticateUser.js'
 import { 
    deleteProfile, fetchProfile, getNearbyUsers, rateUser, updateLocation, updateProfile 

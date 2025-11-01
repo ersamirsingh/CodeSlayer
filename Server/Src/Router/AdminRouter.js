@@ -11,8 +11,8 @@ import {
    getAllMediators,
    getAllEmployers,
    getAllLabourers
-} from '../Controllers/adminController'
-import authenticateAdmin from '../Middleware/authenticateAdmin'
+} from '../Controllers/adminController.js'
+import authenticateAdmin from '../Middleware/authenticateAdmin.js'
 
 
 adminRouter.get('/overview', authenticateAdmin, overview)
