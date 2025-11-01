@@ -7,9 +7,6 @@ import authenticateUser from '../Middleware/authenticateUser.js'
 authRouter.post('/register', Register)
 authRouter.post('/login', Login)
 authRouter.get('/logout', authenticateUser, Logout)
-// authRouter.delete('/delete', authenticateUser, DeleteUser)
-// authRouter.get('/:id', authenticateUser, fetchUser)
-// authRouter.patch('/:id', authenticateUser, updateUser)
 authRouter.get('/check', validUser)
 
 
