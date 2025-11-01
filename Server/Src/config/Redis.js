@@ -1,16 +1,16 @@
-import redis from 'redis'
+import { createClient } from 'redis';
 
-
-
-const redisClient = redis.createClient({
-    username: 'default',
-   password:process.env.REDIS_PASS,
+const redisClient = createClient({
+   username: 'default',
+   password: 'q3IDkXKmkvVVlUCt1AvKbzMNJEcvjagh',
    socket: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
+      host: 'redis-18443.c8.us-east-1-4.ec2.redns.redis-cloud.com',
+      port: 18443
    }
 });
 
+redisClient.on('error', err => console.log('Redis Client Error', err));
 
 export default redisClient;
+
 
