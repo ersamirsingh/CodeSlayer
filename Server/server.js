@@ -26,7 +26,7 @@ const InitializeConnection = async ()=>{
     try {
         // console.log(process.env.PORT)
 
-        await Promise.all([main(), redisClient.connect()])
+        await Promise.all([main()])
         console.log('DB connected successfully.')
         // await main()
         // console.log('first')
@@ -46,6 +46,4 @@ const InitializeConnection = async ()=>{
 
 
 InitializeConnection()
-
-
 
