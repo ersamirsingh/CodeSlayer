@@ -25,7 +25,6 @@ app.use(cors({
 const InitializeConnection = async ()=>{
 
     try {
-        // console.log(process.env.PORT)
 
         await Promise.all([main(), redisClient.connect()])
         console.log('DB connected successfully.')
