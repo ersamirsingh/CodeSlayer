@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import About from './components/About';
 import Jobs from './pages/Jobs';
 import JobDetails from './pages/JobDetails';
+import EmployerPlatform from './pages/EmployerPlatform';
 import {
   BrowserRouter as Router,
   Routes,
@@ -36,7 +37,7 @@ function App() {
         ></Route> */}
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/employplatform" /> : <Login />}
         ></Route>
         <Route
           path="/signup"
@@ -57,6 +58,10 @@ function App() {
         <Route
           path="/jobsdetails"
           element={<JobDetails/>}
+        ></Route>
+        <Route
+          path="/employplatform"
+          element={<EmployerPlatform/>}
         ></Route>
       </Routes>
     </Router>

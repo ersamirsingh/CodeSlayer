@@ -2,7 +2,8 @@ import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Briefcase, Users, ShieldCheck, Search, X, Clock } from "lucide-react";
 import Homeheader from "../components/HomeHeader";
-
+import LaborerPlatform from "./LabourPlatform";
+// import EmployerPlatform from "./EmployerPlatform";
 const sampleJobs = [
   {
     id: "job-001",
@@ -276,6 +277,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <LaborerPlatform/>
     </main>
   );
 }
