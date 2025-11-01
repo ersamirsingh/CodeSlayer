@@ -31,8 +31,9 @@ export const loginUser = createAsyncThunk(
         // console.log(credentials)
 
         try {
+            // console.log(credentials)
             const response = await axiosClient.post('/auth/login', credentials);
-            // console.log(response)
+            console.log(response)
             return response.data;
         } catch (error) {
             if (error.response) {
