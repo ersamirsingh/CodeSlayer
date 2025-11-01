@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Homeheader from './components/HomeHeader';
 import How from './components/How';
+import Landing from './pages/Landing';
 import Home from './pages/Home';
 import { checkAuth } from './store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +12,7 @@ import About from './components/About';
 import Jobs from './pages/Jobs';
 import JobDetails from './pages/JobDetails';
 import EmployerPlatform from './pages/EmployerPlatform';
+import Profile from './pages/Profile';
 import {
   BrowserRouter as Router,
   Routes,
@@ -62,6 +64,10 @@ function App() {
         <Route
           path="/employplatform"
           element={<EmployerPlatform/>}
+        ></Route>
+        <Route
+          path="/profile"
+          element={<Profile/>}
         ></Route>
       </Routes>
     </Router>

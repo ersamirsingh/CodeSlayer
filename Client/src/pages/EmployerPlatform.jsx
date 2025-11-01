@@ -46,8 +46,8 @@ const sampleJobs = [
 ];
 
 const sampleApplicants = [
-  { id: "app-1", name: "Sarah Johnson", jobId: "job-1", position: "Senior Software Engineer", status: "New", match: 95, appliedAt: "2 hours ago" },
-  { id: "app-2", name: "Michael Chen", jobId: "job-1", position: "Senior Software Engineer", status: "Reviewing", match: 88, appliedAt: "1 day ago" }
+  { id: "app-1", name: "Gaya singh", jobId: "job-1", position: "Worker", status: "New", match: 95, appliedAt: "2 hours ago" },
+  { id: "app-2", name: "Samir kumar", jobId: "job-1", position: "coder", status: "Reviewing", match: 88, appliedAt: "1 day ago" }
 ];
 
 function NavButton({ id, icon: Icon, label, current, onClick }) {
@@ -321,15 +321,15 @@ export default function EmployerPlatform() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
               <div>
                 <label className="text-sm text-gray-700">Job Title</label>
-                <input value={postData.title} onChange={(e) => setPostData(p => ({ ...p, title: e.target.value }))} className="w-full px-4 py-2 border rounded mt-1" placeholder="e.g. Senior Software Engineer" />
+                <input value={postData.title} onChange={(e) => setPostData(p => ({ ...p, title: e.target.value }))} className="w-full px-4 py-2 border rounded mt-1" placeholder="e.g. labour, painter" />
                 {postErrors.title && <div className="text-xs text-red-600 mt-1">{postErrors.title}</div>}
               </div>
               <div>
                 <label className="text-sm text-gray-700">Category</label>
                 <select value={postData.category} onChange={(e) => setPostData(p => ({ ...p, category: e.target.value }))} className="w-full px-4 py-2 border rounded mt-1">
-                  <option>Software Development</option>
-                  <option>Design</option>
-                  <option>Marketing</option>
+                  <option>Painter</option>
+                  <option>Carpainter</option>
+                  <option>Plumber</option>
                   <option>Construction</option>
                   <option>Operations</option>
                 </select>
@@ -577,7 +577,7 @@ export default function EmployerPlatform() {
           <div className="flex justify-between">
             <div>
               <div className="text-sm opacity-90">Available Balance</div>
-              <div className="text-2xl font-bold mt-2">$12,450</div>
+              <div className="text-2xl font-bold mt-2">12,450</div>
             </div>
             <DollarSign size={28} />
           </div>
@@ -587,7 +587,7 @@ export default function EmployerPlatform() {
           <div className="flex justify-between">
             <div>
               <div className="text-sm opacity-90">In Escrow</div>
-              <div className="text-2xl font-bold mt-2">$8,200</div>
+              <div className="text-2xl font-bold mt-2">8,200</div>
             </div>
             <Clock size={28} />
           </div>
@@ -597,7 +597,7 @@ export default function EmployerPlatform() {
           <div className="flex justify-between">
             <div>
               <div className="text-sm opacity-90">This Month</div>
-              <div className="text-2xl font-bold mt-2">$24,680</div>
+              <div className="text-2xl font-bold mt-2">24,680</div>
             </div>
             <TrendingUp size={28} />
           </div>

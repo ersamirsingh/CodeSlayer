@@ -1,283 +1,152 @@
-import React, { useMemo, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { Bell, Menu, X, User, LogOut, Settings, Home as HomeIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Briefcase, Users, ShieldCheck, Search, X, Clock } from "lucide-react";
-import Homeheader from "../components/HomeHeader";
-import LaborerPlatform from "./LabourPlatform";
-// import EmployerPlatform from "./EmployerPlatform";
-const sampleJobs = [
-  {
-    id: "job-001",
-    title: "Field Harvester — Seasonal",
-    employer: "Kumar Farms",
-    description: "Harvesting and bundling wheat. 7 AM - 5 PM. Tools provided.",
-    wage: 600,
-    payType: "Daily",
-    locationName: "Sikandarpur Village",
-    distance: 2.1,
-  },
-  {
-    id: "job-002",
-    title: "Masonry Helper",
-    employer: "Rai Construction",
-    description: "Assist masons on-site. 8 AM - 6 PM. Basic experience required.",
-    wage: 700,
-    payType: "Daily",
-    locationName: "Block Market",
-    distance: 4.5,
-  },
-  {
-    id: "job-003",
-    title: "Irrigation Assistant",
-    employer: "Sharma Farms",
-    description: "Help in canal irrigation and maintenance.",
-    wage: 500,
-    payType: "Daily",
-    locationName: "Gram Panchayat",
-    distance: 1.2,
-  },
-];
 
-function formatWage(w) {
-  return `₹${w.toLocaleString("en-IN")}`;
-}
+export default function Home({ userName = "Nitish", onLogout = () => {}, onNavigate = (path) => {} }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef();
 
-function JobCard({ job }) {
-  return (
-    <article
-      aria-labelledby={`job-${job.id}-title`}
-      className="bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-md transition p-4 flex flex-col justify-between"
-    >
-      <div>
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h3 id={`job-${job.id}-title`} className="text-lg font-semibold text-gray-800">
-              {job.title}
-            </h3>
-            <p className="text-sm text-gray-500 mt-1">
-              {job.employer} • <span className="text-gray-600">{job.locationName}</span>
-            </p>
-            <p className="text-sm text-gray-600 mt-3 line-clamp-3">{job.description}</p>
-          </div>
 
-          <div className="text-right shrink-0">
-            <div className="text-xl font-extrabold text-primary">{formatWage(job.wage)}</div>
-            <div className="text-xs text-gray-500 mt-1">{job.payType}</div>
-            <Link
-              to={`/jobs/${job.id}`}
-              className="inline-flex items-center justify-center mt-3 px-3 py-1.5 rounded-md bg-primary text-white text-sm font-medium shadow hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
-              aria-label={`View ${job.title}`}
-            >
-              View
-            </Link>
-          </div>
-        </div>
+  useEffect(() => {
+    function handler(e) {
+      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileOpen(false);
+    }
+    window.addEventListener("click", handler);
+    return () => window.removeEventListener("click", handler);
+  }, []);
 
-        <div className="mt-3 flex items-center gap-3 text-xs text-gray-500">
-          <span className="inline-flex items-center gap-1">
-            <MapPin className="w-4 h-4" /> <span>{job.distance} km</span>
-          </span>
-
-          <span className="inline-flex items-center gap-1">
-            <Clock className="w-4 h-4" /> <span>{job.payType}</span>
-          </span>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-export default function Home() {
-  const [query, setQuery] = useState("");
-  const [nearbyOnly, setNearbyOnly] = useState(false);
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return sampleJobs.filter((j) => {
-      const hay = `${j.title} ${j.description} ${j.employer} ${j.locationName}`.toLowerCase();
-      const matchesQuery = q === "" || hay.includes(q);
-      const matchesNearby = !nearbyOnly || j.distance <= 5;
-      return matchesQuery && matchesNearby;
-    });
-  }, [query, nearbyOnly]);
+  const initials = userName
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
-    <main className="min-h-screen bg-gray-50 text-gray-800">
-      <Homeheader />
-
-      {/* HERO */}
-      <section className="max-w-7xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-2 items-center">
-        <div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
-            Fair jobs, transparent payments — <span className="text-primary">for rural workers</span>
-          </h1>
-          <p className="mt-4 text-gray-600 max-w-xl">
-            Find nearby verified jobs, apply with one tap, and use our mediation system for fair dispute resolution.
-            SMS support available for low-connectivity areas.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-white font-medium shadow hover:brightness-95">
-              Find Jobs
-            </Link>
-            <Link to="/post-job" className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-primary text-primary bg-white hover:bg-primary/5">
-              Post a Job
-            </Link>
-          </div>
-
-          {/* Search card */}
-          <div className="mt-6 bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
-            <form className="grid sm:grid-cols-3 gap-3 items-center" onSubmit={(e) => e.preventDefault()}>
-              <div className="sm:col-span-2 relative">
-                <label htmlFor="job-search" className="sr-only">Search jobs</label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                    <Search className="w-4 h-4" />
-                  </span>
-
-                  <input
-                    id="job-search"
-                    className="pl-10 pr-10 h-11 w-full rounded-lg border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-primary/30"
-                    placeholder="Search jobs, skills or employer"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    aria-label="Search jobs"
-                  />
-
-                  {query && (
-                    <button
-                      type="button"
-                      onClick={() => setQuery("")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-100 hover:bg-gray-200 focus:outline-none"
-                      aria-label="Clear search"
-                    >
-                      <X className="w-4 h-4 text-gray-600" />
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setNearbyOnly((s) => !s)}
-                  aria-pressed={nearbyOnly}
-                  className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border ${
-                    nearbyOnly ? "bg-primary/10 border-primary text-primary" : "bg-white border-gray-200 text-gray-700"
-                  } focus:outline-none`}
-                >
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{nearbyOnly ? "Nearby only" : "Nearby"}</span>
-                </button>
-
-                <Link
-                  to="/jobs"
-                  className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 text-sm hover:bg-gray-50"
-                >
-                  View all jobs
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <aside className="order-first md:order-last">
-          <div className="bg-white rounded-xl shadow-sm p-5 grid grid-cols-2 gap-4">
-            <div className="p-4 border rounded-lg text-center">
-              <div className="text-2xl font-bold">1.2K+</div>
-              <div className="text-xs text-gray-500 mt-1">Active Jobs</div>
-            </div>
-            <div className="p-4 border rounded-lg text-center">
-              <div className="text-2xl font-bold">8.5K+</div>
-              <div className="text-xs text-gray-500 mt-1">Registered Workers</div>
-            </div>
-            <div className="p-4 border rounded-lg text-center">
-              <div className="text-2xl font-bold">500+</div>
-              <div className="text-xs text-gray-500 mt-1">Employers</div>
-            </div>
-            <div className="p-4 border rounded-lg text-center">
-              <div className="text-2xl font-bold">98%</div>
-              <div className="text-xs text-gray-500 mt-1">Payment Success</div>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      {/* FEATURES */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <h2 className="text-2xl font-semibold mb-4">What we offer</h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="p-5 border rounded-xl bg-white text-center">
-            <div className="mx-auto mb-3 w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <h4 className="font-semibold">Verified Profiles</h4>
-            <p className="text-sm text-gray-600 mt-2">KYC & ratings to build trust between workers and employers.</p>
-          </div>
-
-          <div className="p-5 border rounded-xl bg-white text-center">
-            <div className="mx-auto mb-3 w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Briefcase className="w-5 h-5" />
-            </div>
-            <h4 className="font-semibold">Skill-based Matching</h4>
-            <p className="text-sm text-gray-600 mt-2">Find jobs that match your skills and distance preferences.</p>
-          </div>
-
-          <div className="p-5 border rounded-xl bg-white text-center">
-            <div className="mx-auto mb-3 w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-              <Users className="w-5 h-5" />
-            </div>
-            <h4 className="font-semibold">Mediation Support</h4>
-            <p className="text-sm text-gray-600 mt-2">Raise disputes and get help from trained mediators.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED JOBS */}
-      <section className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-semibold">Featured Jobs Near You</h2>
-          <Link to="/jobs" className="text-sm text-primary hover:underline hidden sm:inline">View all jobs</Link>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.length ? (
-            filtered.map((job) => <JobCard key={job.id} job={job} />)
-          ) : (
-            <div className="col-span-full p-6 bg-white border rounded-xl text-center text-gray-500">
-              No jobs found. Try clearing filters or expand your search radius.
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-primary/5 border-t mt-8">
-        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-semibold">Ready to get started?</h3>
-            <p className="text-gray-600">Sign up as a worker or post your first job — trusted, local, and fair.</p>
-          </div>
-          <div className="flex gap-3">
-            <Link to="/signup" className="inline-flex items-center px-4 py-2 rounded-md bg-primary text-white">Get Started</Link>
-            <Link to="/contact" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200">Contact Us</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="bg-white border-t">
-        <div className="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-gray-600">© {new Date().getFullYear()} ShramSetu</div>
+    <header className="bg-white border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Left: Logo / Brand */}
           <div className="flex items-center gap-4">
-            <Link to="/privacy" className="text-sm text-gray-500">Privacy</Link>
-            <Link to="/terms" className="text-sm text-gray-500">Terms</Link>
-            <div className="flex items-center text-sm text-gray-500 gap-2">
-              <Phone className="w-4 h-4" /> <span>Help: 1800-XXX-XXXX</span>
+            <button
+              className="md:hidden p-2 rounded-md hover:bg-gray-100"
+              aria-label="Toggle menu"
+              onClick={() => setMobileOpen((s) => !s)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+
+            <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate("/")}>
+              <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-lg">
+                KS
+              </div>
+              <div>
+                <div className="text-lg font-extrabold leading-tight">KaamSetu</div>
+                <div className="text-xs text-gray-500 -mt-0.5">Local work • Fair pay</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Middle: optional nav (hidden on small screens) */}
+          <nav className="hidden md:flex md:items-center md:space-x-6">
+            <Link to="/jobs" onClick={() => onNavigate("/jobs")} className="text-sm text-gray-700 hover:text-indigo-600">
+              Jobs
+            </Link>
+            <Link to="/applications" onClick={() => onNavigate("/applications")} className="text-sm text-gray-700 hover:text-indigo-600">
+              Applications
+            </Link>
+            <Link to="/disputes" onClick={() => onNavigate("/disputes")} className="text-sm text-gray-700 hover:text-indigo-600">
+              Disputes
+            </Link>
+          </nav>
+
+          {/* Right: actions */}
+          <div className="flex items-center gap-3">
+            <button
+              className="relative p-2 rounded-md hover:bg-gray-100"
+              aria-label="Notifications"
+              onClick={() => onNavigate("/notifications")}
+            >
+              <Bell className="w-5 h-5 text-gray-700" />
+              <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-semibold bg-red-600 text-white rounded-full">
+                3
+              </span>
+            </button>
+
+            {/* Profile dropdown */}
+            <div className="relative" ref={profileRef}>
+              <button
+                className="flex items-center gap-3 p-1 rounded-md hover:bg-gray-100"
+                aria-haspopup="true"
+                aria-expanded={profileOpen}
+                onClick={() => setProfileOpen((s) => !s)}
+              >
+                <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-sm font-semibold text-gray-700">
+                  {initials}
+                </div>
+                <div className="hidden sm:block text-left">
+                  <div className="text-sm font-medium text-gray-800">{userName}</div>
+                  <div className="text-xs text-gray-500">Worker</div>
+                </div>
+              </button>
+
+              {profileOpen && (
+                <div
+                  role="menu"
+                  aria-label="Profile menu"
+                  className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50"
+                >
+                  <button
+                    onClick={() => { setProfileOpen(false); onNavigate("/profile"); }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4" /> Profile
+                  </button>
+
+                  <button
+                    onClick={() => { setProfileOpen(false); onNavigate("/settings"); }}
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
+                  >
+                    <Settings className="w-4 h-4" /> Settings
+                  </button>
+
+                  <div className="border-t my-1" />
+
+                  <button
+                    onClick={() => onLogout()}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center gap-2"
+                  >
+                    <LogOut className="w-4 h-4" /> Logout
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </footer>
-      <LaborerPlatform/>
-    </main>
+
+        {/* Mobile menu (collapsible) */}
+        {mobileOpen && (
+          <div className="md:hidden mt-2 pb-4 border-t">
+            <div className="flex flex-col gap-2 pt-3">
+              <button onClick={() => { setMobileOpen(false); onNavigate("/jobs"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Jobs</button>
+              <button onClick={() => { setMobileOpen(false); onNavigate("/applications"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Applications</button>
+              <button onClick={() => { setMobileOpen(false); onNavigate("/disputes"); }} className="text-left px-3 py-2 rounded hover:bg-gray-100">Disputes</button>
+              <div className="pt-2 border-t">
+                <button onClick={() => { setMobileOpen(false); onNavigate("/profile"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
+                  <User className="w-4 h-4" /> Profile
+                </button>
+                <button onClick={() => { setMobileOpen(false); onNavigate("/settings"); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
+                  <Settings className="w-4 h-4" /> Settings
+                </button>
+                <button onClick={() => { setMobileOpen(false); onLogout(); }} className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2 text-red-600">
+                  <LogOut className="w-4 h-4" /> Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
 }
