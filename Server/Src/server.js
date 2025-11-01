@@ -6,6 +6,8 @@ import main from './config/db.js'
 import redisClient from './config/Redis.js'
 import cors from 'cors'
 import authRouter from './Router/AuthRouter.js'
+import userRouter from './Router/UserRouter.js'
+import adminRouter from './Router/AdminRouter.js'
 
 
 app.use(express.json())
@@ -19,6 +21,8 @@ app.use(cors({
 
 
 app.use('/auth', authRouter)
+app.use('/user', userRouter)
+app.use('/admin', adminRouter)
 
 
 
