@@ -31,7 +31,7 @@ def match_job(job_id: str):
         })
 
     candidates = "\n".join(
-        [f"{m['name']} ({m['rating']}⭐) skills={','.join(m['skills'])}" for m in matches]
+        [f"{m['name']} ({m['rating']}) skills={','.join(m['skills'])}" for m in matches]
     )
 
     messages = [

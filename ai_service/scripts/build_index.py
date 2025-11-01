@@ -4,7 +4,7 @@ from utils.vecstore import build_index_from_laborers
 if __name__ == "__main__":
     laborers = get_all_laborers()
     if not laborers:
-        print("⚠️ No laborers found in DB.")
+        print(" No laborers found in DB.")
         exit(0)
 
     docs = []
