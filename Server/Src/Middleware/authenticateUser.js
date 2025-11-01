@@ -16,7 +16,7 @@ const authenticateUser = async (req, res, next)=>{
          return res.status(400).json({
             message: 'Unauthorized access'
          })
-3
+
       const payload = jwt.verify(Token, process.env.SECRET_KEY)
 
       const isBlocked = await redisClient.exists(`Token ${Token}`)

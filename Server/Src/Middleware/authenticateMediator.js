@@ -3,7 +3,7 @@ import User from '../Models/User'
 import redisClient from '../config/Redis'
 
 
-const authenticateAdmin = async (req, res, next)=>{
+const authenticateMediator = async (req, res, next)=>{
 
 
    try {
@@ -18,10 +18,8 @@ const authenticateAdmin = async (req, res, next)=>{
 
       const payload = jwt.verify(Token, process.env.SECRET_KEY)
 
-      if(payload?.role != 'admin')
-         return res.status(401).json({
-            message: "you're not admin"
-         })
+      if(payload?.role != 'mediator')
+         return res.status(401).json({message: "you're not admin"})
 
       const isBlocked = await redisClient.exists(`Token ${Token}`)
       if(isBlocked)
@@ -39,4 +37,4 @@ const authenticateAdmin = async (req, res, next)=>{
    }
 }
 
-export default authenticateAdmin
+export default authenticateMediator
