@@ -253,3 +253,125 @@ export const verifyUser = async (req, res, next) => {
     }
 }
 
+export const unverifyUser = async (req, res, next) => {
+    try{
+        const user = await User.findById(req.params.userId);
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        } 
+        user.verified = false;
+        await user.save();
+        res.status(200).json({
+            success: true,
+            message: 'User unverified successfully',
+        });
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getUserDetails = async (req, res, next) => {
+    try{
+        const user = await User.findById(req.params.userId).select('-password');
+        if(!user){
+            res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: {
+                user
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getJobDetails = async (req, res, next) => {
+    try{
+        const job = await Job.findById(req.params.jobId).populate('employer', 'name email phone').populate('assignedLaborer', 'name email phone');
+        if(!job){
+            res.status(404).json({
+                success: false,
+                message: 'Job not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: {
+                job
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getDisputeDetails = async (req, res, next) => {
+    try{
+        const dispute = await Dispute.findById(req.params.disputeId).populate('job').populate('raisedBy', 'name email phone').populate('mediator', 'name email phone');
+        if(!dispute){
+            res.status(404).json({
+                success: false,
+                message: 'Dispute not found'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: {
+                dispute
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getAllMediators = async (req, res, next) => {
+    try{
+        const mediators = await User.find({ role: 'mediator' });
+        res.status(200).json({
+            success: true,
+            data: {
+                mediators
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getAllEmployers = async(req, res, next) => {
+    try{
+        const employers = await User.find({ role: 'employer' });
+        res.status(200).json({
+            success: true,
+            data: {
+                employers
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
+export const getAllLabourers = async (req, res, next) => {
+    try{
+        const labourers = await User.find({ role: 'labourer '});
+        res.status(200).json({
+            success: true,
+            data: {
+                labourers
+            }
+        })
+    }catch(err){
+        next(err);
+    }
+}
+
