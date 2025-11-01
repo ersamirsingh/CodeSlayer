@@ -1,16 +1,17 @@
 import React from "react";
 import { Smartphone, MapPin, Clock, CheckCircle, Users, Briefcase, Globe2 } from "lucide-react";
 import { NavLink } from "react-router";
+import Homeheader from "./HomeHeader";
 
 const How = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
-
+      <Homeheader/>
       <section className="bg-white py-14 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">How KaamSetu Works</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Simple, reliable, and transparent — ShramSetu connects rural workers with employers through a
+            Simple, reliable, and transparent — KaamSetu connects rural workers with employers through a
             user-friendly platform designed for quick hiring and fair work.
           </p>
         </div>
@@ -49,12 +50,12 @@ const How = () => {
           </ol>
 
           <div className="mt-6">
-            <button
+            <NavLink
               to="/signup"
               className="inline-block px-5 py-2 rounded-md bg-indigo-600 text-white font-medium shadow-sm hover:bg-indigo-500"
             >
               Sign up as Worker
-            </button>
+            </NavLink>
           </div>
         </div>
 
@@ -88,19 +89,19 @@ const How = () => {
           </ol>
 
           <div className="mt-6">
-            <button
+            <NavLink
               to="/signup"
               className="inline-block px-5 py-2 rounded-md bg-rose-600 text-white font-medium shadow-sm hover:bg-rose-500"
             >
               Sign up as Employer
-            </button>
+            </NavLink>
           </div>
         </div>
       </section>
 
       <section className="bg-white py-12">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Why ShramSetu?</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">Why KaamSetu?</h3>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
             <Feature icon={<CheckCircle />} title="Verified Jobs" desc="Only verified employers and fair contracts." />
             <Feature icon={<Clock />} title="Quick Hiring" desc="Post jobs and hire within hours." />
@@ -124,12 +125,12 @@ const How = () => {
           <h3 className="text-2xl font-bold mb-3">Ready to get started?</h3>
           <p className="mb-6 text-indigo-100">Create your account and start connecting with trusted local workers or employers.</p>
           <div className="flex items-center justify-center gap-3">
-            <button to="/signup" className="px-5 py-3 rounded-md bg-white text-indigo-600 font-semibold">
+            <NavLink to="/signup" className="px-5 py-3 rounded-md bg-white text-indigo-600 font-semibold">
               Sign Up
-            </button>
-            <button to="/login" className="px-5 py-3 rounded-md border border-white/30 text-white">
+            </NavLink>
+            <NavLink to="/login" className="px-5 py-3 rounded-md border border-white/30 text-white">
               Login
-            </button>
+            </NavLink>
           </div>
         </div>
       </section>

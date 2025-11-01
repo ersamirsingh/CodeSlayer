@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Menu, X } from "lucide-react"; 
 
 export default function Homeheader() {
@@ -28,35 +28,35 @@ export default function Homeheader() {
             <div className="flex items-center justify-between h-16">
             
             <div className="flex items-center gap-3">
-                <button to="/" className="flex items-center gap-3">
+                <NavLink to="/" className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-md bg-linear-to-br from-indigo-600 to-indigo-400 flex items-center justify-center text-white text-lg font-bold">K</div>
                 <div>
                     <div className="text-lg font-extrabold text-gray-900">KaamSetu</div>
                     <div className="text-xs text-gray-500 -mt-0.5">Rural Labor Exchange</div>
                 </div>
-                </button>
+                </NavLink>
             </div>
 
             <nav className="hidden md:flex items-center gap-3">
                 <div className="flex items-center gap-5">
-                <NavItem to="/about">About</NavItem>
-                <NavItem to="/how">How it works</NavItem>
+                <NavLink to="/about">About</NavLink>
+                <NavLink to="/how">How it works</NavLink>
                 </div>
 
                 <div className="ml-4 flex items-center gap-2">
-                <button
+                <Link
                     to="/login"
                     className="text-sm px-3 py-2 rounded-md font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
                 >
                     Login
-                </button>
+                </Link>
 
-                <button
+                <Link
                     to="/signup"
                     className="text-sm px-3 py-2 rounded-md font-medium bg-indigo-600 text-white hover:bg-indigo-500 shadow-sm"
                 >
                     Sign up
-                </button>
+                </Link>
                 </div>
             </nav>
 
@@ -92,21 +92,21 @@ export default function Homeheader() {
                 </NavItem>
 
                 <div className="pt-4 border-t mt-4 flex flex-col gap-3">
-                    <button
+                    <Link
                     to="/login"
                     onClick={() => setOpen(false)}
                     className="w-full text-sm px-3 py-2 rounded-md font-medium text-gray-700 hover:bg-gray-100 hover:text-indigo-600 text-left"
                     >
                     Login
-                    </button>
+                    </Link>
 
-                    <button
+                    <Link
                     to="/signup"
                     onClick={() => setOpen(false)}
                     className="w-full text-sm px-3 py-2 rounded-md font-medium bg-indigo-600 text-white hover:bg-indigo-500 text-center"
                     >
                     Sign up
-                    </button>
+                    </Link>
                 </div>
                 </div>
             
