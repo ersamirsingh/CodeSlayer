@@ -1,18 +1,51 @@
-import express from "express"; 
-import { configDotenv } from "dotenv";
+import express from 'express'
+const app = express()
+import dotenv from 'dotenv'
+dotenv.config()
+import main from './config/db.js'
+import redisClient from './config/Redis.js'
+// import cors from 'cors'
 
-import { connectToDB } from "./config/db.js";
 
-configDotenv();
+app.use(express.json())
+// app.use(cookieParser())
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-app.use(express.json());
-app.get("/", (req, res) => {
-    res.send("API is running...");
-});
 
-app.listen(PORT, async() => {
-    console.log(`Server running on port ${PORT}`);
-    await connectToDB();
-});
+// app.use(cors({
+//    origin: 'http://localhost:5173',
+//    credentials: true
+// }))
+
+
+// app.use('/auth', authRouter)
+
+
+
+const InitializeConnection = async ()=>{
+
+    try {
+        // console.log(process.env.PORT)
+
+        // await Promise.all([main(), redisClient.connect()])
+        // console.log('DB connected successfully.')
+        await main()
+        console.log('first')
+        // await redisClient.connect()
+        // console.log('second')
+
+        console.log('Redis connected successfully.')
+        app.listen(process.env.PORT, ()=>{
+            console.log('Listening at PORT', process.env.PORT)
+        })
+        
+    } catch (error) {
+
+        console.log(error.message)
+    }
+}
+
+
+InitializeConnection()
+
+
+
