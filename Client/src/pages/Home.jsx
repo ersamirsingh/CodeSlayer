@@ -3,8 +3,10 @@ import { Bell, Menu, X, User, LogOut, Settings, Home as HomeIcon } from "lucide-
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../store/authSlice";
+import EmployerPlatform from "./EmployerPlatform";
 
 
+// eslint-disable-next-line no-unused-vars
 export default function Home({ userName = "Nitish", onLogout = () => {}, onNavigate = (path) => {} }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -16,6 +18,7 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
   const handleLogout =()=>{
     setMobileOpen(false)
     dispatch(logoutUser())
+    navigate('/')
   }
 
 
@@ -35,6 +38,7 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
     .toUpperCase();
 
   return (
+    <>
     <header className="bg-white border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -159,5 +163,7 @@ export default function Home({ userName = "Nitish", onLogout = () => {}, onNavig
         )}
       </div>
     </header>
+    <EmployerPlatform/>
+    </>
   );
 }

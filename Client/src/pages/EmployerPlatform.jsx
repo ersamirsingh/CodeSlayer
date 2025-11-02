@@ -1,4 +1,4 @@
-// src/pages/EmployerPlatform.jsx
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useMemo, useState } from "react";
 import {
   Building2,
@@ -24,17 +24,6 @@ import {
   Menu as MenuIcon,
   X as CloseIcon
 } from "lucide-react";
-
-/**
- * EmployerPlatform.jsx (responsive)
- * - Responsive sidebar -> collapses to mobile top-nav
- * - Pages: Post Job (wizard), Applicants, Payments, Disputes, Analytics
- * - LocalStorage-backed demo data; swap with API as needed
- *
- * Requirements:
- *  - Tailwind CSS
- *  - lucide-react (npm i lucide-react)
- */
 
 const LS = {
   JOBS: "employer_jobs_v1",
@@ -90,7 +79,6 @@ export default function EmployerPlatform() {
   useEffect(() => localStorage.setItem(LS.JOBS, JSON.stringify(jobs)), [jobs]);
   useEffect(() => localStorage.setItem(LS.APPS, JSON.stringify(apps)), [apps]);
 
-  /* ----------------- Post Job Wizard (controlled) ----------------- */
   const initialPost = {
     title: "",
     category: "Software Development",
@@ -153,14 +141,13 @@ export default function EmployerPlatform() {
       postedAt: "Just now"
     };
     setJobs(prev => [newJob, ...prev]);
-    // reset wizard
+
     setPostData(initialPost);
     setJobPostStep(1);
     setCurrentPage("applicants");
     setMobileNavOpen(false);
   };
 
-  /* ----------------- Applicants Management ----------------- */
   const [appSearch, setAppSearch] = useState("");
   const [appFilterJob, setAppFilterJob] = useState("all");
   const filteredApps = useMemo(() => {
@@ -176,7 +163,6 @@ export default function EmployerPlatform() {
     setApps(prev => prev.map(a => a.id === appId ? { ...a, status } : a));
   };
 
-  /* ----------------- Payments / Escrow - mock actions ----------------- */
   const mockReleaseEscrow = (project) => {
     alert(`Mock: Released funds for ${project}. Replace with API integration.`);
   };
@@ -187,7 +173,6 @@ export default function EmployerPlatform() {
     { id: "DSP-002", title: "Quality Issues with Deliverables", contractor: "Jane Smith", amount: 2200, status: "Under Review", date: "Oct 24", priority: "medium" }
   ]);
 
-  /* ----------------- Analytics - derived metrics ----------------- */
   const analytics = useMemo(() => {
     const totalJobs = jobs.length;
     const totalApplicants = apps.length;
@@ -195,7 +180,6 @@ export default function EmployerPlatform() {
     return { totalJobs, totalApplicants, hires };
   }, [jobs, apps]);
 
-  /* ----------------- UI Helpers ----------------- */
   const mobileNavItems = [
     { id: "postjob", label: "Post Job", icon: FileText },
     { id: "applicants", label: "Applicants", icon: Users },
@@ -210,12 +194,11 @@ export default function EmployerPlatform() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  /* ----------------- Header (responsive) ----------------- */
   const Header = () => (
     <header className="bg-white shadow-sm sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <button
               className="lg:hidden p-2 rounded-md hover:bg-gray-100"
               onClick={() => setMobileNavOpen(v => !v)}
@@ -231,9 +214,9 @@ export default function EmployerPlatform() {
                 <div className="text-xs text-gray-500">Manage hiring & payments</div>
               </div>
             </div>
-          </div>
+          </div> */}
 
-          {/* search - collapses on mobile */}
+
           <div className="hidden md:flex items-center gap-2 ml-4">
             <div className="relative">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -260,7 +243,7 @@ export default function EmployerPlatform() {
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right mr-2">
               <div className="text-sm font-medium">Acme Corp</div>
               <div className="text-xs text-gray-500">Account: Premium</div>
@@ -276,11 +259,10 @@ export default function EmployerPlatform() {
             >
               <LogOut size={18} />
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      {/* Mobile horizontal nav when mobileNavOpen (small screens) */}
       <div className={`lg:hidden bg-white border-t ${mobileNavOpen ? "block" : "hidden"}`}>
         <nav className="px-3 py-2 space-y-2">
           {mobileNavItems.map(item => (
@@ -293,8 +275,6 @@ export default function EmployerPlatform() {
       </div>
     </header>
   );
-
-  /* ----------------- Page fragments (responsive-friendly) ----------------- */
 
   const PostJobContent = (
     <div className="bg-white rounded-lg shadow-lg p-6">
@@ -755,7 +735,6 @@ export default function EmployerPlatform() {
     </div>
   );
 
-  /* ----------------- Main layout render ----------------- */
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />

@@ -3,18 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { User, MapPin, Phone, Edit2, Check, X, Upload } from "lucide-react";
 
-/**
- * Profile.jsx
- * - Fetches current user profile from GET /api/v1/users/me
- * - Updates profile via PUT /api/v1/users/me
- * - Uploads avatar via POST /api/v1/users/me/avatar (multipart/form-data)
- * - Expects JWT in localStorage key 'token' (Authorization: Bearer <token>)
- *
- * Adjust endpoints or auth storage as needed.
- */
-
-// const API_BASE = process.env.REACT_APP_API_BASE || ""; // e.g. "https://api.example.com"
-
 const AVAILABLE_SKILLS = [
   "Construction", "Painting", "Carpentry", "Electrical",
   "Plumbing", "Loading/Unloading", "Warehouse", "Cleaning",

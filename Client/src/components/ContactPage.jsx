@@ -82,7 +82,7 @@ export default function ContactPage() {
             {/* Optional: small map placeholder */}
             <div className="bg-white rounded-2xl p-0 overflow-hidden shadow-sm">
               <div className="w-full h-56">
-                {/* Replace src with real embed or map component */}
+                
                 <iframe
                   title="ShramSetu Office"
                   className="w-full h-full border-0"

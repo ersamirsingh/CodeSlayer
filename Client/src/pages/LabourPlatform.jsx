@@ -401,7 +401,7 @@ const SAMPLE_JOBS = [
     company: "BuildRight Co.",
     location: "Downtown",
     distance: 2.3,
-    pay: "₹1,800/day",
+    pay: "₹800/day",
     duration: "3 days",
     posted: "2 hours ago",
     urgent: true,
@@ -414,7 +414,7 @@ const SAMPLE_JOBS = [
     company: "QuickShip Logistics",
     location: "Industrial Park",
     distance: 4.1,
-    pay: "₹1,400/day",
+    pay: "₹400/day",
     duration: "1 week",
     posted: "5 hours ago",
     urgent: false,
@@ -426,7 +426,7 @@ const SAMPLE_JOBS = [
     company: "Swift Movers",
     location: "Westside",
     distance: 1.8,
-    pay: "₹1,600/day",
+    pay: "₹600/day",
     duration: "1 day",
     posted: "1 day ago",
     urgent: false,
@@ -438,7 +438,7 @@ const SAMPLE_JOBS = [
     company: "Metro Construction",
     location: "City Center",
     distance: 3.5,
-    pay: "₹1,500/day",
+    pay: "₹500/day",
     duration: "2 weeks",
     posted: "1 day ago",
     urgent: true,
@@ -763,7 +763,17 @@ export default function LaborerPlatform() {
           </main>
 
           <aside className="lg:col-span-1">
-            <SidebarMapPlaceholder />
+            {/* <SidebarMapPlaceholder /> */}
+                <div className="bg-white rounded-2xl p-0 overflow-hidden shadow-sm">
+              <div className="w-full h-56">
+                
+                <iframe
+                  title="ShramSetu Office"
+                  className="w-full h-full border-0"
+                  src="https://www.google.com/maps?q=India&output=embed"
+                />
+              </div>
+            </div>
 
             <div className="mt-4 space-y-4">
               <div className="bg-white rounded-lg p-4 shadow">
