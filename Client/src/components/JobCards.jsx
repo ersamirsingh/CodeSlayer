@@ -1,8 +1,9 @@
 // src/components/JobCard.jsx
 import React from "react";
 import { MapPin, Briefcase, IndianRupee } from "lucide-react";
+import { NavLink } from "react-router";
 
-export default function JobCard({ job, onApply }) {
+export default function JobCard({ job }) {
   return (
     <div className="bg-white shadow-md rounded-xl hover:shadow-lg transition-all duration-300 p-5 w-full">
       <div className="flex justify-between items-start">
@@ -33,12 +34,13 @@ export default function JobCard({ job, onApply }) {
         ))}
       </div>
 
-      <button
-        onClick={() => onApply(job)}
+      <NavLink
+        to="/jobdetails"
+        // onClick={() => onApply(job)}
         className="btn btn-primary w-full mt-5 rounded-lg"
       >
         Apply Now
-      </button>
+      </NavLink>
     </div>
   );
 }

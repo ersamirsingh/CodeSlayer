@@ -1,7 +1,6 @@
 import React from 'react';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Homeheader from './components/HomeHeader';
 import How from './components/How';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
@@ -13,6 +12,8 @@ import Jobs from './pages/Jobs';
 import JobDetails from './pages/JobDetails';
 import EmployerPlatform from './pages/EmployerPlatform';
 import Profile from './pages/Profile';
+import ContactPage from './components/ContactPage';
+import Applications from './components/Applications';
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,7 +35,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />}></Route>
        
-        
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
+        ></Route>
         <Route
           path="/signup"
           element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
@@ -64,9 +68,17 @@ function App() {
           path="/employplatform"
           element={<EmployerPlatform/>}
         ></Route>
+         <Route
+          path="/contactpage"
+          element={<ContactPage/>}
+        ></Route>
         <Route
           path="/profile"
           element={isAuthenticated ? <Profile/> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/aplication"
+          element={isAuthenticated ? <Applications/> : <Navigate to="/login" />}
         ></Route>
       </Routes>
     </Router>

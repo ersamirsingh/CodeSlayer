@@ -29,7 +29,7 @@ export default function About() {
                 Browse Jobs
               </Link>
               <Link
-                to="/contact"
+                to="/contactpage"
                 className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200 text-sm"
               >
                 Contact Support
@@ -78,7 +78,7 @@ export default function About() {
             <a href="mailto:support@kaamsetu.example" className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white">
               <Mail className="w-4 h-4" /> Email us
             </a>
-            <Link to="/contact" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200">Contact page</Link>
+            <Link to="/contactpage" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200">Contact page</Link>
           </div>
         </div>
       </section>

@@ -119,7 +119,7 @@ export default function Landing() {
             <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-md bg-primary text-white font-medium shadow hover:brightness-95">
               Find Jobs
             </Link>
-            <Link to="/post-job" className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-primary text-primary bg-white hover:bg-primary/5">
+            <Link to="/login" className="inline-flex items-center gap-2 px-5 py-3 rounded-md border border-primary text-primary bg-white hover:bg-primary/5">
               Post a Job
             </Link>
           </div>
@@ -259,7 +259,7 @@ export default function Landing() {
           </div>
           <div className="flex gap-3">
             <Link to="/signup" className="inline-flex items-center px-4 py-2 rounded-md bg-primary text-white">Get Started</Link>
-            <Link to="/contact" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200">Contact Us</Link>
+            <Link to="/contactpage" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200">Contact Us</Link>
           </div>
         </div>
       </section>
