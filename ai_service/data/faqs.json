@@ -1,0 +1,6 @@
+[
+  {"question": "how to register as laborer", "answer": "Open signup, choose 'Laborer', verify OTP, and fill your skill profile."},
+  {"question": "how to find job", "answer": "Login as laborer → open 'Nearby Jobs' → use filters like distance and skill."},
+  {"question": "how to raise dispute", "answer": "Go to 'My Jobs', select job, tap 'Raise Dispute' and explain issue."},
+  {"question": "how payment works", "answer": "Employer pays through Razorpay escrow; released after completion or admin review."}
+]
