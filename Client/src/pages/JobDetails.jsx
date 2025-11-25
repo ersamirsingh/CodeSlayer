@@ -2,13 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, MapPin, Clock, Tag, Phone, User, Wallet } from "lucide-react";
 
-/**
- * Props / behavior:
- * - If mounted via route /jobs/:id, component reads jobId from useParams and loads job.
- * - Otherwise you can pass a `job` object as prop to render directly.
- *
- * Mock fetch for demo is used below; replace with axios/fetch to your API.
- */
 
 const MOCK_JOBS = [
   {
