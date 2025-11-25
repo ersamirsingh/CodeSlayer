@@ -2,6 +2,7 @@
 /node_modules
 package-lock.json
 yarn.lock
+node_modules/
 
 
 # Environment variables
@@ -62,3 +63,6 @@ build
 # Local MongoDB data if you're using it locally
 /data/db
 
+.env
+*/.env
+**/.env
