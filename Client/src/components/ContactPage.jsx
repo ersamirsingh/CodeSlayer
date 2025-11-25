@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router";
-import Homeheader from "./HomeHeader";
+import { Mail, Phone, Clock, MapPin, Send, CheckCircle, AlertCircle, User, Briefcase } from "lucide-react";
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -19,7 +18,6 @@ export default function ContactPage() {
   const validate = () => {
     if (!form.name.trim()) return "Please enter your name.";
     if (!form.email.trim()) return "Please enter your email.";
-    // simple email regex
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRe.test(form.email)) return "Please enter a valid email.";
     if (!form.message.trim()) return "Please enter a message.";
@@ -35,56 +33,101 @@ export default function ContactPage() {
     }
 
     setStatus({ loading: true, ok: null, msg: "" });
-    try {
-      // Replace URL with your backend endpoint
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Server error");
-      }
-
+    
+    // Simulate API call
+    setTimeout(() => {
       setStatus({ loading: false, ok: true, msg: "Thanks — we received your message!" });
       setForm({ name: "", email: "", role: "worker", message: "" });
-    } catch (err) {
-      setStatus({ loading: false, ok: false, msg: err.message || "Something went wrong." });
-    }
+    }, 1500);
   };
 
   return (
-    <>
-    <Homeheader/>
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid gap-10 lg:grid-cols-2 items-start">
-          {/* Left: Contact info */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h1 className="text-2xl font-bold text-gray-900">Contact Us</h1>
-              <p className="mt-2 text-gray-600">
-                Have a question or need help? Fill out the form and our team will get back to you within 1-2 business days.
-              </p>
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
 
-              <div className="mt-6 grid gap-4">
-                <ContactInfoRow label="Email" value="support@shramsetu.example" />
-                <ContactInfoRow label="Phone" value="+91 98765 43210" />
-                <ContactInfoRow label="Working hours" value="Mon - Sat, 9:00 AM - 6:00 PM" />
-                <div className="mt-4 text-sm text-gray-500">
-                  Prefer immediate help? Call us or check the <NavLink to="/help" className="text-indigo-600 hover:underline">Help & FAQs</NavLink>.
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-br from-emerald-50/50 via-teal-50/30 to-cyan-50/50" />
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-6 py-16 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 font-bold text-sm mb-6 shadow-sm">
+            <Mail className="w-4 h-4" />
+            <span>We're Here to Help</span>
+          </div>
+          
+          <h1 className="text-5xl lg:text-6xl font-black leading-tight mb-4">
+            <span className="bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 bg-clip-text text-transparent">
+              Get in <span className="bg-linear-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+              Touch
+            </span>
+            </span>
+            <br />
+          </h1>
+          
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            Have a question or need help? Fill out the form and our team will get back to you within 1-2 business days.
+          </p>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="grid gap-8 lg:grid-cols-5">
+          {/* Left: Contact Cards - Takes 2 columns */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Contact Info Card */}
+            <div className="group relative bg-linear-to-br from-white to-slate-50 rounded-3xl p-8 shadow-xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
+              <div className="absolute inset-0 bg-linear-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-500" />
+              
+              <div className="relative z-10">
+                <h2 className="text-2xl font-black text-slate-900 mb-6">Contact Information</h2>
+                
+                <div className="space-y-5">
+                  <ContactInfoCard 
+                    icon={<Mail className="w-5 h-5" />} 
+                    label="Email"
+                    value="support@kaamsetu.example"
+                    gradient="from-emerald-500 to-teal-500"
+                  />
+                  
+                  <ContactInfoCard 
+                    icon={<Phone className="w-5 h-5" />} 
+                    label="Phone"
+                    value="+91 98765 43210"
+                    gradient="from-teal-500 to-cyan-500"
+                  />
+                  
+                  <ContactInfoCard 
+                    icon={<Clock className="w-5 h-5" />} 
+                    label="Working Hours"
+                    value="Mon - Sat, 9:00 AM - 6:00 PM"
+                    gradient="from-cyan-500 to-blue-500"
+                  />
+                  
+                  <ContactInfoCard 
+                    icon={<MapPin className="w-5 h-5" />} 
+                    label="Location"
+                    value="India"
+                    gradient="from-blue-500 to-indigo-500"
+                  />
+                </div>
+
+                <div className="mt-8 p-4 rounded-2xl bg-linear-to-r from-emerald-50 to-teal-50 border border-emerald-200">
+                  <p className="text-sm text-slate-700">
+                    <span className="font-bold text-emerald-700">Need immediate help?</span> Call us or check the <button className="text-emerald-600 font-bold hover:underline">Help & FAQs</button>.
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Optional: small map placeholder */}
-            <div className="bg-white rounded-2xl p-0 overflow-hidden shadow-sm">
-              <div className="w-full h-56">
-                
+            {/* Map Card */}
+            <div className="bg-linear-to-br from-white to-slate-50 rounded-3xl overflow-hidden shadow-xl border border-slate-200 hover:shadow-2xl transition-all duration-500">
+              <div className="w-full h-64">
                 <iframe
-                  title="ShramSetu Office"
+                  title="KaamSetu Office"
                   className="w-full h-full border-0"
                   src="https://www.google.com/maps?q=India&output=embed"
                 />
@@ -92,129 +135,194 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Right: Contact form */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm">
-            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Name</label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={onChange}
-                  className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                  placeholder="Your full name"
-                  required
-                />
-              </div>
+          {/* Right: Contact Form - Takes 3 columns */}
+          <div className="lg:col-span-3">
+            <div className="group relative bg-linear-to-br from-white to-slate-50 rounded-3xl p-8 shadow-xl border border-slate-200 overflow-hidden hover:shadow-2xl transition-all duration-500">
+              <div className="absolute inset-0 bg-linear-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-500" />
+              
+              <div className="relative z-10">
+                <h2 className="text-2xl font-black text-slate-900 mb-2">Send us a Message</h2>
+                <p className="text-slate-600 mb-8">Fill out the form below and we'll respond as soon as possible.</p>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Email</label>
-                <input
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={onChange}
-                  className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                  placeholder="you@example.com"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Role</label>
-                <div className="mt-1 flex gap-3">
-                  <label className="inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer">
+                <div className="space-y-6">
+                  {/* Name Field */}
+                  <div>
+                    <label className="block text-sm font-bold text-slate-900 mb-2">Your Name</label>
                     <input
-                      type="radio"
-                      name="role"
-                      value="worker"
-                      checked={form.role === "worker"}
+                      name="name"
+                      value={form.name}
                       onChange={onChange}
-                      className="accent-indigo-600"
+                      className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 focus:bg-white focus:outline-none transition-all font-medium"
+                      placeholder="Enter your full name"
+                      required
                     />
-                    <span className="text-sm text-gray-700">Worker</span>
-                  </label>
+                  </div>
 
-                  <label className="inline-flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg cursor-pointer">
+                  {/* Email Field */}
+                  <div>
+                    <label className="block text-sm font-bold text-slate-900 mb-2">Email Address</label>
                     <input
-                      type="radio"
-                      name="role"
-                      value="employer"
-                      checked={form.role === "employer"}
+                      name="email"
+                      type="email"
+                      value={form.email}
                       onChange={onChange}
-                      className="accent-indigo-600"
+                      className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 focus:bg-white focus:outline-none transition-all font-medium"
+                      placeholder="you@example.com"
+                      required
                     />
-                    <span className="text-sm text-gray-700">Employer</span>
-                  </label>
+                  </div>
+
+                  {/* Role Selection */}
+                  <div>
+                    <label className="block text-sm font-bold text-slate-900 mb-3">I am a</label>
+                    <div className="grid grid-cols-2 gap-4">
+                      <label className={`relative flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                        form.role === "worker" 
+                          ? "border-emerald-500 bg-linear-to-br from-emerald-50 to-teal-50" 
+                          : "border-slate-200 bg-white hover:border-slate-300"
+                      }`}>
+                        <input
+                          type="radio"
+                          name="role"
+                          value="worker"
+                          checked={form.role === "worker"}
+                          onChange={onChange}
+                          className="sr-only"
+                        />
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                          form.role === "worker" 
+                            ? "bg-linear-to-br from-emerald-500 to-teal-500 text-white" 
+                            : "bg-slate-100 text-slate-400"
+                        }`}>
+                          <User className="w-5 h-5" />
+                        </div>
+                        <span className={`font-bold ${form.role === "worker" ? "text-emerald-700" : "text-slate-700"}`}>
+                          Worker
+                        </span>
+                      </label>
+
+                      <label className={`relative flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
+                        form.role === "employer" 
+                          ? "border-emerald-500 bg-linear-to-br from-emerald-50 to-teal-50" 
+                          : "border-slate-200 bg-white hover:border-slate-300"
+                      }`}>
+                        <input
+                          type="radio"
+                          name="role"
+                          value="employer"
+                          checked={form.role === "employer"}
+                          onChange={onChange}
+                          className="sr-only"
+                        />
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                          form.role === "employer" 
+                            ? "bg-linear-to-br from-emerald-500 to-teal-500 text-white" 
+                            : "bg-slate-100 text-slate-400"
+                        }`}>
+                          <Briefcase className="w-5 h-5" />
+                        </div>
+                        <span className={`font-bold ${form.role === "employer" ? "text-emerald-700" : "text-slate-700"}`}>
+                          Employer
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Message Field */}
+                  <div>
+                    <label className="block text-sm font-bold text-slate-900 mb-2">Your Message</label>
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={onChange}
+                      rows="5"
+                      className="w-full px-4 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 focus:bg-white focus:outline-none transition-all font-medium resize-none"
+                      placeholder="How can we help you today?"
+                      required
+                    />
+                  </div>
+
+                  {/* Status Messages */}
+                  {status.ok === true && (
+                    <div className="flex items-center gap-3 rounded-2xl bg-linear-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 px-4 py-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0" />
+                      <p className="text-sm font-semibold text-emerald-700">{status.msg}</p>
+                    </div>
+                  )}
+                  
+                  {status.ok === false && (
+                    <div className="flex items-center gap-3 rounded-2xl bg-linear-to-r from-rose-50 to-pink-50 border-2 border-rose-200 px-4 py-3">
+                      <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+                      <p className="text-sm font-semibold text-rose-700">{status.msg}</p>
+                    </div>
+                  )}
+
+                  {/* Buttons */}
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="submit"
+                      disabled={status.loading}
+                      className={`flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold shadow-lg transition-all duration-300 ${
+                        status.loading 
+                          ? "bg-slate-300 text-slate-500 cursor-not-allowed" 
+                          : "bg-linear-to-r from-emerald-500 to-teal-500 text-white hover:from-emerald-600 hover:to-teal-600 hover:shadow-xl hover:scale-105"
+                      }`}
+                    >
+                      {status.loading ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          Send Message
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setForm({ name: "", email: "", role: "worker", message: "" });
+                        setStatus({ loading: false, ok: null, msg: "" });
+                      }}
+                      className="px-6 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition-all duration-300 hover:scale-105"
+                    >
+                      Reset
+                    </button>
+                  </div>
+
+                  <p className="text-xs text-slate-500 text-center">
+                    By contacting us you agree to our <button className="text-emerald-600 font-bold hover:underline">Privacy Policy</button>.
+                  </p>
                 </div>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Message</label>
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={onChange}
-                  rows="5"
-                  className="mt-1 block w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                  placeholder="How can we help?"
-                  required
-                />
-              </div>
-
-              {/* Status */}
-              {status.ok === true && (
-                <div className="rounded-md bg-green-50 border border-green-200 text-green-700 px-4 py-2 text-sm">
-                  {status.msg}
-                </div>
-              )}
-              {status.ok === false && (
-                <div className="rounded-md bg-red-50 border border-red-200 text-red-700 px-4 py-2 text-sm">
-                  {status.msg}
-                </div>
-              )}
-
-              <div className="flex items-center justify-between gap-4">
-                <button
-                  type="submit"
-                  disabled={status.loading}
-                  className={`inline-flex items-center justify-center px-4 py-2 rounded-md text-white font-medium ${
-                    status.loading ? "bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-500"
-                  }`}
-                >
-                  {status.loading ? "Sending..." : "Send Message"}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForm({ name: "", email: "", role: "worker", message: "" });
-                    setStatus({ loading: false, ok: null, msg: "" });
-                  }}
-                  className="text-sm text-gray-600 hover:underline"
-                >
-                  Reset
-                </button>
-              </div>
-            </form>
-
-            <div className="mt-6 text-xs text-gray-500">
-              By contacting us you agree to our <NavLink to="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</NavLink>.
             </div>
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-slate-200 mt-20">
+        <div className="max-w-7xl mx-auto px-6 py-8 text-center text-sm text-slate-500 font-medium">
+          <p>© {new Date().getFullYear()} KaamSetu. Empowering rural workers, building a better tomorrow.</p>
+        </div>
+      </footer>
     </div>
-    </>
   );
 }
 
-/* Small helper component */
-function ContactInfoRow({ label, value }) {
+function ContactInfoCard({ icon, label, value, gradient }) {
   return (
-    <div className="flex items-start gap-3">
-      <div className="text-sm font-medium text-gray-700 w-28">{label}</div>
-      <div className="text-sm text-gray-600">{value}</div>
+    <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-white transition-all duration-300">
+      <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${gradient} flex items-center justify-center shadow-lg shrink-0`}>
+        <div className="text-white">{icon}</div>
+      </div>
+      <div>
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">{label}</div>
+        <div className="text-sm font-semibold text-slate-900">{value}</div>
+      </div>
     </div>
   );
 }

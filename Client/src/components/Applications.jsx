@@ -16,7 +16,7 @@ export default function Applications() {
         const data = await res.json();
         setApplicants(data);
       } catch (err) {
-        console.error("Error fetching applicants:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }

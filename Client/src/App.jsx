@@ -14,6 +14,9 @@ import EmployerPlatform from './pages/EmployerPlatform';
 import Profile from './pages/Profile';
 import ContactPage from './components/ContactPage';
 import Applications from './components/Applications';
+import HeaderSwitcher from './components/HeaderSwitcher';
+import ApplicationForm from './components/ApplicationForm';
+import LaborerPlatform from './pages/LabourPlatform';
 import {
   BrowserRouter as Router,
   Routes,
@@ -32,53 +35,65 @@ function App() {
 
   return (
     <Router>
+      <HeaderSwitcher/>
       <Routes>
         <Route path="/" element={<Landing />}></Route>
        
-        <Route
-          path="/login"
+        <Route path="/login"
           element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
         ></Route>
-        <Route
-          path="/signup"
+
+        <Route path="/signup"
           element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
         ></Route>
-        <Route
-          path="/home"
-          element={isAuthenticated ? <Home/> : <Signup />}
+
+        <Route path="/home" 
+          element={isAuthenticated ? <Home/> : <Signup />} 
         ></Route>
 
-        <Route
-          path="/how"
+        <Route path="/features"
           element={<How/>}
         ></Route>
-        <Route
-          path="/about"
+
+        <Route path="/about"
           element={<About/>}
         ></Route>
-        <Route
-          path="/jobs"
+
+        <Route path="/jobs"
           element={<Jobs/>}
         ></Route>
-        <Route
-          path="/jobsdetails"
+
+        <Route path="/jobsdetails"
           element={<JobDetails/>}
         ></Route>
-        <Route
-          path="/employplatform"
+
+        <Route path="/employplatform"
           element={<EmployerPlatform/>}
         ></Route>
-         <Route
-          path="/contactpage"
+
+        {/* <Route
+          path="/disputes"
+          element={<Disputes/>}
+        ></Route> */}
+
+         <Route path="/contactpage"
           element={<ContactPage/>}
         ></Route>
-        <Route
-          path="/profile"
+
+        <Route path="/applicationform"
+          element={<ApplicationForm/>}
+        ></Route>
+
+        <Route path="/profile"
           element={isAuthenticated ? <Profile/> : <Navigate to="/login" />}
         ></Route>
-        <Route
-          path="/aplication"
-          element={isAuthenticated ? <Applications/> : <Navigate to="/login" />}
+
+        <Route path="/application"
+          element={ <Applications/> }
+        ></Route>
+
+        <Route path="/labour"
+          element={ <LaborerPlatform/> }
         ></Route>
       </Routes>
     </Router>
