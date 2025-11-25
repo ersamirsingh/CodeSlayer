@@ -37,7 +37,6 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
               </div>
             </button>
 
-            {/* collapsed search on small screens */}
             <div className="hidden sm:flex items-center ml-2">
               <div className="relative">
                 <input
@@ -57,7 +56,6 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
               <Bell className="w-5 h-5 text-slate-700 dark:text-slate-200" />
             </button>
 
-            {/* profile */}
             <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setProfileOpen(s => !s)}
@@ -86,7 +84,6 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
               )}
             </div>
 
-            {/* mobile menu toggle (if you need extra mobile nav) */}
             <div className="sm:hidden">
               <button onClick={() => setMobileOpen(s => !s)} className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition">
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -95,7 +92,6 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
           </div>
         </div>
 
-        {/* optional mobile nav content */}
         {mobileOpen && (
           <div className="sm:hidden px-4 pb-4 border-t border-slate-200 dark:border-gray-800">
             <div className="py-2 space-y-2">

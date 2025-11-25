@@ -33,7 +33,6 @@ export default function LandingHeader() {
             </button>
           </div>
 
-          {/* Desktop nav + CTA */}
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex items-center gap-6 text-sm font-medium">
               <Link to="/labour" className="text-slate-700 hover:text-teal-600 transition">
@@ -64,7 +63,6 @@ export default function LandingHeader() {
             </div>
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setOpen((s) => !s)}
@@ -77,7 +75,6 @@ export default function LandingHeader() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
       {open && (
         <div className="md:hidden">
           <div className="px-4 pt-4 pb-6 space-y-3 border-t border-slate-200 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md">

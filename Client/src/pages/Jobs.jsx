@@ -1,4 +1,3 @@
-// src/pages/Jobs.jsx
 import React from "react";
 import JobCard from "../components/Jobcard";
 

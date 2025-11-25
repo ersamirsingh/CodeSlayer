@@ -305,7 +305,6 @@ export default function ApplicationForm() {
             </form>
           </div>
 
-          {/* Right column: employer view or tips */}
           <aside>
             {isEmployer ? (
               <ApplicantList jobId={jobId} token={token} />

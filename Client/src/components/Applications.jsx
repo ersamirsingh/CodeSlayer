@@ -8,11 +8,10 @@ export default function Applications() {
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch applicants from backend
   useEffect(() => {
     const fetchApplicants = async () => {
       try {
-        const res = await fetch("/api/applicants"); // adjust API URL
+        const res = await fetch("/api/applicants"); 
         const data = await res.json();
         setApplicants(data);
       } catch (err) {
@@ -34,12 +33,11 @@ export default function Applications() {
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Job Applications</h1>
 
           <div className="flex flex-wrap items-center gap-3">
-            {/* Search */}
             <div className="relative">
               <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <input
@@ -51,7 +49,6 @@ export default function Applications() {
               />
             </div>
 
-            {/* Filter */}
             <div className="relative">
               <Filter className="absolute left-3 top-2.5 text-gray-400" size={18} />
               <select
@@ -69,7 +66,6 @@ export default function Applications() {
           </div>
         </div>
 
-        {/* Applicants List */}
         {loading ? (
           <p className="text-gray-500">Loading applicants...</p>
         ) : filteredApplicants.length === 0 ? (
@@ -124,7 +120,6 @@ export default function Applications() {
         )}
       </div>
 
-      {/* Applicant Details Modal */}
       {selected && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 relative shadow-lg">
