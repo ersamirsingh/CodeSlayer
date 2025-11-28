@@ -10,7 +10,7 @@ export default function JobCard({ job }) {
         <div>
           <h2 className="text-lg font-semibold text-gray-800">{job.title}</h2>
           <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
-            <MapPin size={16} /> {job.location}
+            <MapPin size={16} /> {job?.locationText}
           </p>
         </div>
         <span className="bg-green-100 text-green-700 px-3 py-1 text-xs font-medium rounded-full">

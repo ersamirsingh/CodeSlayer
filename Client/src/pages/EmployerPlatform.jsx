@@ -1,26 +1,30 @@
 
 import React, { useState } from "react";
+import axiosClient from "../API/axiosClient";
 import { Briefcase, Users, CreditCard, AlertTriangle, BarChart3, CheckCircle, FileText, XCircle, Search, Download, Plus, Eye, MessageSquare } from "lucide-react";
+
+const getInitialPostData = () => ({
+  title: "",
+  category: "Agriculture",
+  type: "Full-time",
+  location: "",
+  description: "",
+  salaryMin: "",
+  salaryMax: "",
+  payFreq: "Daily",
+  skillsInput: "",
+  skills: [],
+  experience: "Entry Level"
+});
 
 export default function EmployerPlatform() {
   const [currentPage, setCurrentPage] = useState("postjob");
   const [jobPostStep, setJobPostStep] = useState(1);
   
-  const [postData, setPostData] = useState({
-    title: "",
-    category: "Agriculture",
-    type: "Full-time",
-    location: "",
-    description: "",
-    salaryMin: "",
-    salaryMax: "",
-    payFreq: "Daily",
-    skillsInput: "",
-    skills: [],
-    experience: "Entry Level"
-  });
+  const [postData, setPostData] = useState(getInitialPostData());
   
   const [postErrors, setPostErrors] = useState({});
+  const [submitState, setSubmitState] = useState({ loading: false, error: null, success: null });
 
   const validateStep = (step) => {
     const e = {};
@@ -41,6 +45,22 @@ export default function EmployerPlatform() {
     return Object.keys(e).length === 0;
   };
 
+  const ensureStepsValid = () => {
+    for (let step = 1; step <= 3; step += 1) {
+      if (!validateStep(step)) {
+        setJobPostStep(step);
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const resetPostForm = () => {
+    setPostData(getInitialPostData());
+    setPostErrors({});
+    setJobPostStep(1);
+  };
+
   const nextStep = () => {
     if (validateStep(jobPostStep)) setJobPostStep(s => Math.min(4, s + 1));
   };
@@ -57,13 +77,53 @@ export default function EmployerPlatform() {
 
   const removeSkill = (s) => setPostData(prev => ({ ...prev, skills: prev.skills.filter(x => x !== s) }));
 
-  const publishJob = () => {
-    if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
-      setJobPostStep(1);
-      return;
+  const startNewJob = () => {
+    setCurrentPage("postjob");
+    resetPostForm();
+    setSubmitState({ loading: false, error: null, success: null });
+  };
+
+  const publishJob = async () => {
+    if (!ensureStepsValid()) return;
+
+    const parseNumeric = (value) => {
+      if (value === undefined || value === null || value === "") return undefined;
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : undefined;
+    };
+
+    const payload = {
+      title: postData.title.trim(),
+      description: postData.description.trim(),
+      category: postData.category,
+      employmentType: postData.type,
+      locationText: postData.location.trim(),
+      salaryMin: parseNumeric(postData.salaryMin),
+      salaryMax: parseNumeric(postData.salaryMax),
+      payFrequency: postData.payFreq,
+      skills: postData.skills,
+      experienceLevel: postData.experience
+    };
+
+    setSubmitState({ loading: true, error: null, success: null });
+
+    try {
+      const { data } = await axiosClient.post("/user/jobs", payload);
+      setSubmitState({
+        loading: false,
+        error: null,
+        success: data?.message || "Job published successfully!"
+      });
+      resetPostForm();
+      setCurrentPage("applicants");
+    } catch (error) {
+      const message = error.response?.data?.message || "Failed to publish job. Please try again.";
+      setSubmitState({
+        loading: false,
+        error: message,
+        success: null
+      });
     }
-    alert("Job published successfully!");
-    setCurrentPage("applicants");
   };
 
   const navItems = [
@@ -101,7 +161,7 @@ export default function EmployerPlatform() {
             <div className="pt-6 border-t border-slate-200">
               <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Quick Actions</div>
               <button
-                onClick={() => { setCurrentPage("postjob"); setJobPostStep(1); }}
+                onClick={startNewJob}
                 className="w-full px-4 py-3 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl transition-all"
               >
                 + New Job
@@ -120,6 +180,12 @@ export default function EmployerPlatform() {
                 </h1>
                 <p className="text-slate-600">Create a job post to receive qualified applicants.</p>
               </div>
+
+              {submitState.error && (
+                <div className="mt-6 rounded-2xl border-2 border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+                  {submitState.error}
+                </div>
+              )}
 
               {/* Step Indicator */}
               <div className="mb-8">
@@ -397,9 +463,10 @@ export default function EmployerPlatform() {
                   ) : (
                     <button
                       onClick={publishJob}
-                      className="px-8 py-3.5 rounded-2xl bg-linear-to-r from-green-500 to-emerald-500 text-white font-bold shadow-lg hover:shadow-xl transition-all"
+                      disabled={submitState.loading}
+                      className={`px-8 py-3.5 rounded-2xl bg-linear-to-r from-green-500 to-emerald-500 text-white font-bold shadow-lg hover:shadow-xl transition-all ${submitState.loading ? "opacity-70 cursor-not-allowed" : ""}`}
                     >
-                      Publish Job
+                      {submitState.loading ? "Publishing..." : "Publish Job"}
                     </button>
                   )}
                 </div>
@@ -413,6 +480,12 @@ export default function EmployerPlatform() {
                 Applicant Management
               </h2>
               <p className="text-slate-600 mb-8">Review and manage candidates for your roles</p>
+              
+              {submitState.success && (
+                <div className="mb-6 rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                  {submitState.success}
+                </div>
+              )}
               
               <div className="text-center py-12 text-slate-500">
                 No applicants yet. Check back later!

@@ -68,8 +68,7 @@ export const checkAuth = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const { data } = await axiosClient.get('/auth/check');
-            // console.log(data)
-            return data;
+            return data.user;
         } catch (error) {
             return rejectWithValue(error);
         }
