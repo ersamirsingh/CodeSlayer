@@ -7,7 +7,7 @@ import authenticateUser from '../Middleware/authenticateUser.js'
 authRouter.post('/register', Register)
 authRouter.post('/login', Login)
 authRouter.get('/logout', authenticateUser, Logout)
-authRouter.get('/check', validUser)
+authRouter.get('/check', authenticateUser, validUser)
 
 
 

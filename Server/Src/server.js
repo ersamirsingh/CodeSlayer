@@ -8,10 +8,12 @@ import cors from 'cors'
 import authRouter from './Router/AuthRouter.js'
 import userRouter from './Router/UserRouter.js'
 import adminRouter from './Router/AdminRouter.js'
+import cookieParser from 'cookie-parser'
 
 
 app.use(express.json())
-// app.use(cookieParser())
+app.use(cookieParser())
+
 
 
 app.use(cors({
