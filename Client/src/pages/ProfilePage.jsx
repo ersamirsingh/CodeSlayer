@@ -1856,7 +1856,7 @@ export default function Profile() {
                       type="text"
                       value={role}
                       readOnly
-                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-100 border-2 border-slate-200 font-medium text-slate-500"
+                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-100 border-2 border-slate-200 font-medium"
                     />
                   </div>
                 </div>

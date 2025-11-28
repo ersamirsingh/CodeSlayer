@@ -273,6 +273,7 @@
 
 
 import React, { useState, useMemo } from 'react';
+import {Link} from 'react-router-dom'
 import { Search, Filter, AlertCircle, Phone, Mail, MessageSquare, ChevronDown, ChevronUp, X, Send, HelpCircle, Shield, Zap } from 'lucide-react';
 
 export default function FAQ() {
@@ -460,9 +461,9 @@ export default function FAQ() {
               >
                 Report a Payment Issue
               </button>
-              <button className="p-6 rounded-3xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all">
+              <Link to="/contactpage" className="p-6 text-center rounded-3xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all">
                 Contact Support
-              </button>
+              </Link>
             </div>
           </div>
 
