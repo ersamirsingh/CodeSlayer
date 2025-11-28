@@ -163,6 +163,33 @@ export default function Landing() {
         </div>
       </section>
 
+
+       {/* Featured Jobs Section */}
+      <section id="jobs" className="max-w-7xl mx-auto px-4 py-20">
+        <div className="flex items-center justify-between mb-10">
+          <div>
+            <h2 className="text-4xl font-black text-slate-900 mb-2">Featured Jobs Near You</h2>
+            <p className="text-slate-600">Hand-picked opportunities in your area</p>
+          </div>
+          <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700 transition">
+            View all <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.length ? (
+            filtered.map((job) => <JobCard key={job.id} job={job} />)
+          ) : (
+            <div className="col-span-full p-12 bg-linear-to-br from-white to-slate-50 border-2 border-dashed border-slate-300 rounded-3xl text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
+                <Search className="w-8 h-8 text-slate-400" />
+              </div>
+              <p className="text-slate-600 font-medium">No jobs found. Try clearing filters or expand your search radius.</p>
+            </div>
+          )}
+        </div>
+      </section>
+      
       {/* Features Section */}
       <section id="features" className="max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-12">
@@ -210,31 +237,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Featured Jobs Section */}
-      <section id="jobs" className="max-w-7xl mx-auto px-4 py-20">
-        <div className="flex items-center justify-between mb-10">
-          <div>
-            <h2 className="text-4xl font-black text-slate-900 mb-2">Featured Jobs Near You</h2>
-            <p className="text-slate-600">Hand-picked opportunities in your area</p>
-          </div>
-          <Link to="/jobs" className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 font-bold text-slate-700 transition">
-            View all <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.length ? (
-            filtered.map((job) => <JobCard key={job.id} job={job} />)
-          ) : (
-            <div className="col-span-full p-12 bg-linear-to-br from-white to-slate-50 border-2 border-dashed border-slate-300 rounded-3xl text-center">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 flex items-center justify-center">
-                <Search className="w-8 h-8 text-slate-400" />
-              </div>
-              <p className="text-slate-600 font-medium">No jobs found. Try clearing filters or expand your search radius.</p>
-            </div>
-          )}
-        </div>
-      </section>
+     
 
       {/* CTA Section */}
       <section className="relative overflow-hidden bg-linear-to-br from-slate-900 via-slate-800 to-slate-900">

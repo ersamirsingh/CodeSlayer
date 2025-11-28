@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Link} from 'react-router-dom'
 import { Mail, Phone, Clock, MapPin, Send, CheckCircle, AlertCircle, User, Briefcase } from "lucide-react";
 
 export default function ContactPage() {
@@ -117,7 +118,7 @@ export default function ContactPage() {
 
                 <div className="mt-8 p-4 rounded-2xl bg-linear-to-r from-emerald-50 to-teal-50 border border-emerald-200">
                   <p className="text-sm text-slate-700">
-                    <span className="font-bold text-emerald-700">Need immediate help?</span> Call us or check the <button className="text-emerald-600 font-bold hover:underline">Help & FAQs</button>.
+                    <span className="font-bold text-emerald-700">Need immediate help?</span> Call us or check the <Link to="/faq" className="text-emerald-600 font-bold hover:underline">Help & FAQs</Link>.
                   </p>
                 </div>
               </div>

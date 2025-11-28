@@ -10,13 +10,14 @@ import { useEffect } from 'react';
 import About from './components/About';
 import Jobs from './pages/Jobs';
 import JobDetails from './pages/JobDetails';
-import EmployerPlatform from './pages/EmployerPlatform';
+import JobPost from './pages/JobPost';
 import Profile from './pages/Profile';
 import ContactPage from './components/ContactPage';
 import Applications from './components/Applications';
 import HeaderSwitcher from './components/HeaderSwitcher';
 import ApplicationForm from './components/ApplicationForm';
 import LaborerPlatform from './pages/LabourPlatform';
+import FAQ from './pages/FAQ';
 import {
   BrowserRouter as Router,
   Routes,
@@ -67,8 +68,8 @@ function App() {
           element={<JobDetails/>}
         ></Route>
 
-        <Route path="/employplatform"
-          element={<EmployerPlatform/>}
+        <Route path="/jobpost"
+          element={<JobPost/>}
         ></Route>
 
         {/* <Route
@@ -94,6 +95,10 @@ function App() {
 
         <Route path="/labour"
           element={ <LaborerPlatform/> }
+        ></Route>
+
+        <Route path="/faq"
+          element={<FAQ/>}
         ></Route>
       </Routes>
     </Router>
