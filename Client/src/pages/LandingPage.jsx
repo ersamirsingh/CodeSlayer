@@ -40,7 +40,7 @@ const sampleJobs = [
   },
 ];
 
-export default function Landing() {
+export default function LandingPage() {
   const [query, setQuery] = useState("");
   const [nearbyOnly, setNearbyOnly] = useState(false);
 
@@ -87,7 +87,7 @@ export default function Landing() {
             </p>
 
             <div className="flex flex-wrap gap-4 mb-10">
-              <Link to="/jobs" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
+              <Link to="/jobpage" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
                 Find Jobs <ArrowRight className="w-5 h-5" />
               </Link>
               <Link to="/signup" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-bold transition-all duration-300 hover:scale-105 hover:border-emerald-300">

@@ -2,9 +2,9 @@
 import React from "react";
 import {Link } from 'react-router-dom'
 import { Users, Heart, Target, Clock, Mail, Phone, Shield, Award, TrendingUp, Sparkles, ArrowRight, CheckCircle } from "lucide-react";
-import Footer from "./layout/Footer";
+import Footer from "../components/layout/Footer";
 
-export default function About() {
+export default function AboutPage() {
   return (
     <main className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
 
@@ -39,7 +39,7 @@ export default function About() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Link to="/jobs" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
+              <Link to="/jobpage" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
                 Browse Jobs <ArrowRight className="w-5 h-5" />
               </Link>
               <Link to='/contactpage' className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-bold transition-all duration-300 hover:scale-105">
@@ -167,9 +167,9 @@ export default function About() {
               <button className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
                 <Mail className="w-5 h-5" /> Email Us
               </button>
-              <button className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-white text-white hover:bg-white hover:text-slate-900 font-bold transition-all duration-300 hover:scale-105">
+              <Link to="/contactpage" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-white text-white hover:bg-white hover:text-slate-900 font-bold transition-all duration-300 hover:scale-105">
                 Contact Page
-              </button>
+              </Link>
             </div>
           </div>
         </div>

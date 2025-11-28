@@ -855,10 +855,569 @@
 
 
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import axios from "axios";
+// import React, { useEffect, useMemo, useRef, useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import { User, MapPin, Phone, Edit2, Check, X, Upload, Star, ShieldCheck, AlertCircle, LogOut, Briefcase, FileText } from "lucide-react";
+
+// const AVAILABLE_SKILLS = [
+//   "Construction",
+//   "Painting",
+//   "Carpentry",
+//   "Electrical",
+//   "Plumbing",
+//   "Loading/Unloading",
+//   "Warehouse",
+//   "Cleaning",
+//   "Welding",
+//   "Masonry"
+// ];
+
+// export default function ProfilePage() {
+//   const navigate = useNavigate();
+//   const fileInputRef = useRef(null);
+
+//   const [loading, setLoading] = useState(true);
+//   const [editing, setEditing] = useState(false);
+//   const [saving, setSaving] = useState(false);
+//   const [avatarUploading, setAvatarUploading] = useState(false);
+//   const [error, setError] = useState("");
+//   const [successMsg, setSuccessMsg] = useState("");
+
+//   const [user, setUser] = useState({
+//     _id: "",
+//     firstName: "",
+//     contact: "",
+//     emailId: "",
+//     aadhar: "",
+//     role: "laborer",
+//     skills: [],
+//     verified: false,
+//     rating: 0,
+//     ratingCount: 0,
+//     isBlocked: false,
+//     location: { type: "Point", coordinates: [0, 0] },
+//     avatarUrl: ""
+//   });
+
+//   const api = useMemo(() => {
+//     const token = localStorage.getItem("token") || "";
+//     return axios.create({
+//       baseURL: "http://localhost:3000",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "application/json"
+//       },
+//       timeout: 10000
+//     });
+//   }, []);
+
+//   useEffect(() => {
+//     let mounted = true;
+//     setLoading(true);
+//     setError("");
+//     api
+//       .get("/api/v1/users/me")
+//       .then((res) => {
+//         if (!mounted) return;
+//         const d = res.data || {};
+//         setUser((prev) => ({
+//           ...prev,
+//           _id: d._id || d.id || prev._id,
+//           firstName: d.firstName || d.name || "",
+//           contact: d.contact ? String(d.contact) : "",
+//           emailId: d.emailId || d.email || "",
+//           aadhar: d.aadhar ? String(d.aadhar) : "",
+//           role: d.role || prev.role,
+//           skills: Array.isArray(d.skills) ? d.skills : prev.skills,
+//           verified: Boolean(d.verified),
+//           rating: typeof d.rating === "number" ? d.rating : prev.rating,
+//           ratingCount: typeof d.ratingCount === "number" ? d.ratingCount : prev.ratingCount,
+//           isBlocked: Boolean(d.isBlocked),
+//           location:
+//             d.location && Array.isArray(d.location.coordinates)
+//               ? { type: "Point", coordinates: d.location.coordinates }
+//               : prev.location,
+//           avatarUrl: d.avatarUrl || d.avatar || prev.avatarUrl
+//         }));
+//       })
+//       .catch((err) => {
+//         console.error("Failed to fetch profile:", err);
+//         setError(err?.response?.data?.message || "Unable to load profile.");
+//         if (err?.response?.status === 401) {
+//           localStorage.removeItem("token");
+//           navigate("/login");
+//         }
+//       })
+//       .finally(() => mounted && setLoading(false));
+
+//     return () => {
+//       mounted = false;
+//     };
+//   }, [api, navigate]);
+
+//   const toggleSkill = (skill) => {
+//     setUser((prev) => ({
+//       ...prev,
+//       skills: prev.skills.includes(skill)
+//         ? prev.skills.filter((s) => s !== skill)
+//         : [...prev.skills, skill]
+//     }));
+//   };
+
+//   const handleAvatarPick = () => {
+//     fileInputRef.current?.click();
+//   };
+
+//   const handleAvatarChange = async (e) => {
+//     const file = e.target.files?.[0];
+//     if (!file) return;
+//     setAvatarUploading(true);
+//     setError("");
+//     try {
+//       const form = new FormData();
+//       form.append("avatar", file);
+//       const res = await api.post("/api/v1/users/me/avatar", form, {
+//         headers: { "Content-Type": "multipart/form-data" }
+//       });
+//       setUser((prev) => ({ ...prev, avatarUrl: res.data.avatarUrl || prev.avatarUrl }));
+//       setSuccessMsg("Avatar uploaded");
+//       setTimeout(() => setSuccessMsg(""), 2500);
+//     } catch (err) {
+//       console.error("Avatar upload error:", err);
+//       setError(err?.response?.data?.message || "Avatar upload failed.");
+//     } finally {
+//       setAvatarUploading(false);
+//       e.target.value = "";
+//     }
+//   };
+
+//   const handleUseCurrentLocation = () => {
+//     if (!navigator.geolocation) {
+//       setError("Geolocation not supported in this browser.");
+//       return;
+//     }
+//     setError("");
+//     navigator.geolocation.getCurrentPosition(
+//       (pos) => {
+//         const { longitude, latitude } = pos.coords;
+//         setUser((prev) => ({
+//           ...prev,
+//           location: { type: "Point", coordinates: [longitude, latitude] }
+//         }));
+//         setSuccessMsg("Location set from device.");
+//         setTimeout(() => setSuccessMsg(""), 2500);
+//       },
+//       (err) => {
+//         console.error("Geo error:", err);
+//         setError("Unable to get location. Please allow location access.");
+//       },
+//       { enableHighAccuracy: true, timeout: 10000 }
+//     );
+//   };
+
+//   const handleSave = async (e) => {
+//     e?.preventDefault?.();
+//     setSaving(true);
+//     setError("");
+//     try {
+//       const payload = {
+//         firstName: user.firstName,
+//         contact: Number(user.contact) || user.contact,
+//         aadhar: user.aadhar ? Number(user.aadhar) : undefined,
+//         skills: user.skills,
+//         location: user.location
+//       };
+
+//       Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
+
+//       const res = await api.put("/api/v1/users/me", payload);
+//       const d = res.data || {};
+//       setUser((prev) => ({
+//         ...prev,
+//         ...("firstName" in d ? { firstName: d.firstName } : {}),
+//         ...("contact" in d ? { contact: String(d.contact) } : {}),
+//         ...("aadhar" in d ? { aadhar: String(d.aadhar) } : {}),
+//         ...("skills" in d ? { skills: d.skills } : {}),
+//         ...("location" in d && d.location?.coordinates ? { location: d.location } : {})
+//       }));
+//       setSuccessMsg("Profile updated successfully.");
+//       setEditing(false);
+//       setTimeout(() => setSuccessMsg(""), 2700);
+//     } catch (err) {
+//       console.error("Update failed:", err);
+//       setError(err?.response?.data?.message || "Failed to update profile.");
+//     } finally {
+//       setSaving(false);
+//     }
+//   };
+
+//   const handleLogout = () => {
+//     localStorage.removeItem("token");
+//     navigate("/login");
+//   };
+
+//   if (loading) {
+//     return (
+//       <main className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 via-white to-slate-50">
+//         <div className="text-center">
+//           <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4" />
+//           <div className="text-slate-600 font-semibold">Loading profile...</div>
+//         </div>
+//       </main>
+//     );
+//   }
+
+//   const { firstName, contact, emailId, aadhar, role, skills, verified, rating, ratingCount, isBlocked, location, avatarUrl } = user;
+
+//   return (
+//     <main className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
+//       {/* Background decoration */}
+//       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+//         <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500 rounded-full blur-3xl opacity-5" />
+//         <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-500 rounded-full blur-3xl opacity-5" />
+//       </div>
+
+//       <div className="relative max-w-6xl mx-auto px-4 py-12">
+//         {/* Header */}
+//         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+//           <div>
+//             <h1 className="text-4xl font-black bg-linear-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+//               My Profile
+//             </h1>
+//             <p className="text-slate-600 font-medium">Manage your KaamSetu account details</p>
+//           </div>
+
+//           <div className="flex flex-wrap items-center gap-3">
+//             {verified ? (
+//               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 font-bold">
+//                 <ShieldCheck className="w-4 h-4" /> Verified
+//               </div>
+//             ) : (
+//               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-amber-100 to-orange-100 text-amber-700 font-bold">
+//                 <AlertCircle className="w-4 h-4" /> Not Verified
+//               </div>
+//             )}
+
+//             <button
+//               onClick={() => {
+//                 setEditing((v) => !v);
+//                 setError("");
+//                 setSuccessMsg("");
+//               }}
+//               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold transition-all ${
+//                 editing
+//                   ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
+//                   : "border-2 border-slate-300 text-slate-700 hover:bg-slate-50"
+//               }`}
+//             >
+//               <Edit2 className="w-4 h-4" />
+//               <span>{editing ? "Editing" : "Edit Profile"}</span>
+//             </button>
+
+//             <button
+//               onClick={handleLogout}
+//               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-linear-to-r from-rose-500 to-pink-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-pink-600 transition-all"
+//             >
+//               <LogOut className="w-4 h-4" /> Logout
+//             </button>
+//           </div>
+//         </div>
+
+//         {/* Main Profile Card */}
+//         <div className="bg-linear-to-br from-white to-slate-50 rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+//           {/* Avatar Section */}
+//           <div className="bg-linear-to-r from-emerald-600 via-teal-600 to-cyan-600 p-8">
+//             <div className="flex flex-col md:flex-row gap-6 items-start">
+//               <div className="relative">
+//                 <div className="w-32 h-32 rounded-3xl overflow-hidden bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-2xl border-4 border-white/30">
+//                   {avatarUrl ? (
+//                     <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+//                   ) : (
+//                     <User className="w-16 h-16 text-white/70" />
+//                   )}
+//                 </div>
+
+//                 <button
+//                   onClick={handleAvatarPick}
+//                   className="absolute -bottom-2 -right-2 bg-white text-emerald-600 p-3 rounded-2xl hover:bg-emerald-50 shadow-lg transition-all border-2 border-white"
+//                   title="Upload avatar"
+//                   disabled={avatarUploading}
+//                 >
+//                   {avatarUploading ? (
+//                     <div className="w-5 h-5 border-2 border-emerald-600/30 border-t-emerald-600 rounded-full animate-spin" />
+//                   ) : (
+//                     <Upload className="w-5 h-5" />
+//                   )}
+//                 </button>
+//                 <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+//               </div>
+
+//               <div className="flex-1 text-white">
+//                 <h2 className="text-3xl font-black mb-2">{firstName || "Your name"}</h2>
+//                 <div className="text-emerald-100 font-medium mb-4">{emailId || "No email"}</div>
+
+//                 <div className="flex flex-wrap gap-4">
+//                   <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 backdrop-blur-sm">
+//                     <Star className="w-5 h-5 text-amber-300 fill-amber-300" />
+//                     <span className="font-bold">{rating?.toFixed?.(1) ?? 0}</span>
+//                     <span className="text-sm text-white/80">({ratingCount ?? 0})</span>
+//                   </div>
+
+//                   <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 backdrop-blur-sm">
+//                     <MapPin className="w-5 h-5" />
+//                     <span className="text-sm font-semibold">
+//                       {location?.coordinates && location.coordinates[0] !== 0
+//                         ? `${location.coordinates[0].toFixed(2)}, ${location.coordinates[1].toFixed(2)}`
+//                         : "No location"}
+//                     </span>
+//                   </div>
+
+//                   <div className={`px-4 py-2 rounded-xl font-bold uppercase text-sm ${
+//                     isBlocked ? "bg-rose-500" : "bg-white/20 backdrop-blur-sm"
+//                   }`}>
+//                     {isBlocked ? "Blocked" : role}
+//                   </div>
+//                 </div>
+//               </div>
+
+//               <div className="flex gap-6">
+//                 <div className="text-center">
+//                   <div className="text-3xl font-black text-white mb-1">—</div>
+//                   <div className="text-xs text-emerald-100 font-semibold uppercase tracking-wider">Jobs Applied</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className="text-3xl font-black text-white mb-1">{user.activeCases ?? 0}</div>
+//                   <div className="text-xs text-emerald-100 font-semibold uppercase tracking-wider">Active Cases</div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Content Section */}
+//           <div className="p-8">
+//             {error && (
+//               <div className="mb-6 p-4 rounded-2xl bg-rose-50 border-2 border-rose-200 text-rose-700 font-semibold flex items-center gap-2">
+//                 <AlertCircle className="w-5 h-5" />
+//                 {error}
+//               </div>
+//             )}
+
+//             {successMsg && (
+//               <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 text-emerald-700 font-semibold flex items-center gap-2">
+//                 <ShieldCheck className="w-5 h-5" />
+//                 {successMsg}
+//               </div>
+//             )}
+
+//             {!editing ? (
+//               // READ-ONLY VIEW
+//               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                 <InfoItem label="Full name" value={firstName || "-"} />
+//                 <InfoItem label="Contact" value={contact || "-"} icon={<Phone className="w-4 h-4" />} />
+//                 <InfoItem label="Aadhar" value={aadhar || "-"} />
+//                 <InfoItem label="Role" value={role} />
+//                 <InfoItem label="Verified" value={verified ? "Yes" : "No"} />
+//                 <InfoItem label="Account status" value={isBlocked ? "Blocked" : "Active"} />
+
+//                 <div className="md:col-span-2">
+//                   <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Skills</div>
+//                   <div className="flex flex-wrap gap-2">
+//                     {skills && skills.length ? (
+//                       skills.map((s) => (
+//                         <span key={s} className="px-4 py-2 bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 rounded-full text-sm font-bold">
+//                           {s}
+//                         </span>
+//                       ))
+//                     ) : (
+//                       <div className="text-sm text-slate-500">No skills added</div>
+//                     )}
+//                   </div>
+//                 </div>
+//               </div>
+//             ) : (
+//               // EDIT MODE
+//               <div className="space-y-6">
+//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+//                   <div>
+//                     <label className="block text-sm font-bold text-slate-900 mb-2">Full name</label>
+//                     <input
+//                       type="text"
+//                       value={user.firstName}
+//                       onChange={(e) => setUser((p) => ({ ...p, firstName: e.target.value }))}
+//                       className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+//                       required
+//                     />
+//                   </div>
+
+//                   <div>
+//                     <label className="block text-sm font-bold text-slate-900 mb-2">Contact</label>
+//                     <input
+//                       type="tel"
+//                       value={user.contact}
+//                       onChange={(e) => setUser((p) => ({ ...p, contact: e.target.value }))}
+//                       className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+//                       required
+//                     />
+//                   </div>
+
+//                   <div>
+//                     <label className="block text-sm font-bold text-slate-900 mb-2">Aadhar (optional)</label>
+//                     <input
+//                       type="text"
+//                       value={user.aadhar || ""}
+//                       onChange={(e) => setUser((p) => ({ ...p, aadhar: e.target.value }))}
+//                       className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+//                       maxLength={12}
+//                     />
+//                   </div>
+
+//                   <div>
+//                     <label className="block text-sm font-bold text-slate-900 mb-2">Role</label>
+//                     <input
+//                       type="text"
+//                       value={user.role}
+//                       readOnly
+//                       className="w-full px-4 py-3 rounded-2xl bg-slate-100 border-2 border-slate-200 font-medium text-slate-500"
+//                     />
+//                   </div>
+//                 </div>
+
+//                 <div>
+//                   <label className="block text-sm font-bold text-slate-900 mb-3">Skills</label>
+//                   <div className="flex flex-wrap gap-2">
+//                     {AVAILABLE_SKILLS.map((skill) => (
+//                       <button
+//                         key={skill}
+//                         type="button"
+//                         onClick={() => toggleSkill(skill)}
+//                         className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
+//                           skills.includes(skill)
+//                             ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
+//                             : "bg-white border-2 border-slate-300 text-slate-700 hover:border-emerald-400"
+//                         }`}
+//                       >
+//                         {skill}
+//                       </button>
+//                     ))}
+//                   </div>
+//                 </div>
+
+//                 <div>
+//                   <label className="block text-sm font-bold text-slate-900 mb-2">Location (coordinates)</label>
+//                   <div className="flex gap-3">
+//                     <input
+//                       type="text"
+//                       value={
+//                         user.location?.coordinates ? `${user.location.coordinates[0]}, ${user.location.coordinates[1]}` : ""
+//                       }
+//                       onChange={(e) => {
+//                         const raw = e.target.value;
+//                         const parts = raw.split(",").map((s) => s.trim()).filter(Boolean);
+//                         if (parts.length === 2) {
+//                           const lng = Number(parts[0]);
+//                           const lat = Number(parts[1]);
+//                           if (!isNaN(lng) && !isNaN(lat)) {
+//                             setUser((p) => ({ ...p, location: { type: "Point", coordinates: [lng, lat] } }));
+//                           }
+//                         }
+//                       }}
+//                       placeholder="lng, lat"
+//                       className="flex-1 px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+//                     />
+//                     <button
+//                       type="button"
+//                       onClick={handleUseCurrentLocation}
+//                       className="px-6 py-3 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition-all whitespace-nowrap"
+//                     >
+//                       Use my location
+//                     </button>
+//                   </div>
+//                 </div>
+
+//                 <div className="flex items-center gap-3 pt-4">
+//                   <button
+//                     onClick={handleSave}
+//                     className="px-8 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all flex items-center gap-2"
+//                     disabled={saving}
+//                   >
+//                     {saving ? (
+//                       <>
+//                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+//                         Saving...
+//                       </>
+//                     ) : (
+//                       <>
+//                         <Check className="w-5 h-5" /> Save Changes
+//                       </>
+//                     )}
+//                   </button>
+
+//                   <button
+//                     type="button"
+//                     onClick={() => setEditing(false)}
+//                     className="px-8 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition-all flex items-center gap-2"
+//                   >
+//                     <X className="w-5 h-5" /> Cancel
+//                   </button>
+//                 </div>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+
+//         {/* Footer Actions */}
+//         <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+//           <div className="flex flex-wrap gap-3">
+//             <button
+//               onClick={() => navigate("/applications")}
+//               className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition-all"
+//             >
+//               <Briefcase className="w-4 h-4" /> My Applications
+//             </button>
+//             <button
+//               onClick={() => navigate("/disputes")}
+//               className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border-2 border-slate-300 text-slate-700 font-bold hover:bg-slate-50 transition-all"
+//             >
+//               <FileText className="w-4 h-4" /> My Disputes
+//             </button>
+//           </div>
+
+//           <div className="text-sm text-slate-500 font-medium">
+//             Member since: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "—"}
+//           </div>
+//         </div>
+//       </div>
+//     </main>
+//   );
+// }
+
+// function InfoItem({ label, value, icon }) {
+//   return (
+//     <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+//       <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-2">
+//         {icon}
+//         {label}
+//       </div>
+//       <div className="font-bold text-slate-900">{value}</div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, MapPin, Phone, Edit2, Check, X, Upload, Star, ShieldCheck, AlertCircle, LogOut, Briefcase, FileText } from "lucide-react";
+import axiosClient from "../API/axiosClient";
+import { useSelector } from "react-redux";
+
+
+
 
 const AVAILABLE_SKILLS = [
   "Construction",
@@ -876,88 +1435,60 @@ const AVAILABLE_SKILLS = [
 export default function Profile() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const { user } = useSelector(state => state.auth);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  const [user, setUser] = useState({
-    _id: "",
-    firstName: "",
-    contact: "",
-    emailId: "",
-    aadhar: "",
-    role: "laborer",
-    skills: [],
-    verified: false,
-    rating: 0,
-    ratingCount: 0,
-    isBlocked: false,
-    location: { type: "Point", coordinates: [0, 0] },
-    avatarUrl: ""
-  });
-
-  const api = useMemo(() => {
-    const token = localStorage.getItem("token") || "";
-    return axios.create({
-      baseURL: "http://localhost:3000",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-      timeout: 10000
-    });
-  }, []);
+  const [profile, setProfile] = useState(() => ({
+    _id: user?._id || "",
+    firstName: user?.firstName || "",
+    contact: user?.contact ? String(user.contact) : "",
+    emailId: user?.emailId || "",
+    aadhar: user?.aadhar ? String(user.aadhar) : "",
+    role: user?.role || "",
+    skills: Array.isArray(user?.skills) ? user.skills : [],
+    verified: Boolean(user?.verified ?? user?.isVerified),
+    rating: user?.rating ?? 0,
+    ratingCount: user?.ratingCount ?? 0,
+    isBlocked: Boolean(user?.isBlocked),
+    location: user?.location || { type: "Point", coordinates: [0, 0] },
+    avatarUrl: user?.avatarUrl || "",
+    activeCases: user?.activeCases ?? 0,
+    createdAt: user?.createdAt || null
+  }));
 
   useEffect(() => {
-    let mounted = true;
-    setLoading(true);
-    setError("");
-    api
-      .get("/api/v1/users/me")
-      .then((res) => {
-        if (!mounted) return;
-        const d = res.data || {};
-        setUser((prev) => ({
-          ...prev,
-          _id: d._id || d.id || prev._id,
-          firstName: d.firstName || d.name || "",
-          contact: d.contact ? String(d.contact) : "",
-          emailId: d.emailId || d.email || "",
-          aadhar: d.aadhar ? String(d.aadhar) : "",
-          role: d.role || prev.role,
-          skills: Array.isArray(d.skills) ? d.skills : prev.skills,
-          verified: Boolean(d.verified),
-          rating: typeof d.rating === "number" ? d.rating : prev.rating,
-          ratingCount: typeof d.ratingCount === "number" ? d.ratingCount : prev.ratingCount,
-          isBlocked: Boolean(d.isBlocked),
-          location:
-            d.location && Array.isArray(d.location.coordinates)
-              ? { type: "Point", coordinates: d.location.coordinates }
-              : prev.location,
-          avatarUrl: d.avatarUrl || d.avatar || prev.avatarUrl
-        }));
-      })
-      .catch((err) => {
-        console.error("Failed to fetch profile:", err);
-        setError(err?.response?.data?.message || "Unable to load profile.");
-        if (err?.response?.status === 401) {
-          localStorage.removeItem("token");
-          navigate("/login");
-        }
-      })
-      .finally(() => mounted && setLoading(false));
+    setProfile(prev => ({
+      ...prev,
+      _id: user?._id || "",
+      firstName: user?.firstName || "",
+      contact: user?.contact ? String(user.contact) : "",
+      emailId: user?.emailId || "",
+      aadhar: user?.aadhar ? String(user.aadhar) : "",
+      role: user?.role || "",
+      skills: Array.isArray(user?.skills) ? user.skills : [],
+      verified: Boolean(user?.verified ?? user?.isVerified),
+      rating: user?.rating ?? prev.rating ?? 0,
+      ratingCount: user?.ratingCount ?? prev.ratingCount ?? 0,
+      isBlocked: Boolean(user?.isBlocked),
+      location: user?.location || prev.location || { type: "Point", coordinates: [0, 0] },
+      avatarUrl: user?.avatarUrl || prev.avatarUrl || "",
+      activeCases: user?.activeCases ?? prev.activeCases ?? 0,
+      createdAt: user?.createdAt || prev.createdAt || null
+    }));
+  }, [user]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [api, navigate]);
+  
+
+  
 
   const toggleSkill = (skill) => {
-    setUser((prev) => ({
+    setProfile((prev) => ({
       ...prev,
       skills: prev.skills.includes(skill)
         ? prev.skills.filter((s) => s !== skill)
@@ -977,10 +1508,10 @@ export default function Profile() {
     try {
       const form = new FormData();
       form.append("avatar", file);
-      const res = await api.post("/api/v1/users/me/avatar", form, {
+      const { data } = await axiosClient.post("/user/avatar", form, {
         headers: { "Content-Type": "multipart/form-data" }
       });
-      setUser((prev) => ({ ...prev, avatarUrl: res.data.avatarUrl || prev.avatarUrl }));
+      setProfile(prev => ({ ...prev, avatarUrl: data?.avatarUrl || prev.avatarUrl }));
       setSuccessMsg("Avatar uploaded");
       setTimeout(() => setSuccessMsg(""), 2500);
     } catch (err) {
@@ -1001,7 +1532,7 @@ export default function Profile() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { longitude, latitude } = pos.coords;
-        setUser((prev) => ({
+        setProfile((prev) => ({
           ...prev,
           location: { type: "Point", coordinates: [longitude, latitude] }
         }));
@@ -1020,41 +1551,73 @@ export default function Profile() {
     e?.preventDefault?.();
     setSaving(true);
     setError("");
+
+    const trimmedName = profile.firstName?.trim() || "";
+    const contactValue = profile.contact?.toString().trim();
+    const aadharValue = profile.aadhar?.toString().trim();
+
+    const payload = {
+      firstName: trimmedName,
+      contact: contactValue || undefined,
+      aadhar: aadharValue || undefined,
+      skills: profile.skills,
+      location: profile.location
+    };
+
+    Object.keys(payload).forEach((key) => {
+      if (
+        payload[key] === undefined ||
+        payload[key] === null ||
+        (typeof payload[key] === "string" && payload[key].trim() === "")
+      ) {
+        delete payload[key];
+      }
+    });
+
     try {
-      const payload = {
-        firstName: user.firstName,
-        contact: Number(user.contact) || user.contact,
-        aadhar: user.aadhar ? Number(user.aadhar) : undefined,
-        skills: user.skills,
-        location: user.location
-      };
-
-      Object.keys(payload).forEach((k) => payload[k] === undefined && delete payload[k]);
-
-      const res = await api.put("/api/v1/users/me", payload);
-      const d = res.data || {};
-      setUser((prev) => ({
+      const { data } = await axiosClient.patch('/user/update', payload);
+      const updated = data?.data || data?.user || {};
+      setProfile(prev => ({
         ...prev,
-        ...("firstName" in d ? { firstName: d.firstName } : {}),
-        ...("contact" in d ? { contact: String(d.contact) } : {}),
-        ...("aadhar" in d ? { aadhar: String(d.aadhar) } : {}),
-        ...("skills" in d ? { skills: d.skills } : {}),
-        ...("location" in d && d.location?.coordinates ? { location: d.location } : {})
+        ...payload,
+        ...(
+          updated && typeof updated === "object"
+            ? {
+                firstName: updated.firstName ?? prev.firstName,
+                contact: updated.contact !== undefined ? String(updated.contact) : prev.contact,
+                aadhar: updated.aadhar !== undefined ? String(updated.aadhar) : prev.aadhar,
+                skills: Array.isArray(updated.skills) ? updated.skills : prev.skills,
+                location: updated.location || prev.location,
+                verified: updated.verified ?? prev.verified,
+                rating: updated.rating ?? prev.rating,
+                ratingCount: updated.ratingCount ?? prev.ratingCount,
+                isBlocked: updated.isBlocked ?? prev.isBlocked
+              }
+            : {}
+        )
       }));
-      setSuccessMsg("Profile updated successfully.");
+      setSuccessMsg(data?.message || "Profile updated successfully.");
       setEditing(false);
-      setTimeout(() => setSuccessMsg(""), 2700);
-    } catch (err) {
-      console.error("Update failed:", err);
-      setError(err?.response?.data?.message || "Failed to update profile.");
+    } catch (error) {
+      console.error("Profile update error:", error);
+      setError(error?.response?.data?.message || error?.message || "Failed to update profile.");
     } finally {
       setSaving(false);
+      setTimeout(() => setSuccessMsg(""), 3000);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      await axiosClient.get('/auth/logout');
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      setError(error?.response?.data?.message || "Failed to logout.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -1068,7 +1631,22 @@ export default function Profile() {
     );
   }
 
-  const { firstName, contact, emailId, aadhar, role, skills, verified, rating, ratingCount, isBlocked, location, avatarUrl } = user;
+  const {
+    firstName,
+    contact,
+    emailId,
+    aadhar,
+    role,
+    skills = [],
+    verified,
+    rating,
+    ratingCount,
+    isBlocked,
+    location,
+    avatarUrl,
+    activeCases,
+    createdAt
+  } = profile;
 
   return (
     <main className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
@@ -1101,7 +1679,7 @@ export default function Profile() {
 
             <button
               onClick={() => {
-                setEditing((v) => !v);
+                setEditing((val) => !val);
                 setError("");
                 setSuccessMsg("");
               }}
@@ -1187,7 +1765,7 @@ export default function Profile() {
                   <div className="text-xs text-emerald-100 font-semibold uppercase tracking-wider">Jobs Applied</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-black text-white mb-1">{user.activeCases ?? 0}</div>
+                  <div className="text-3xl font-black text-white mb-1">{activeCases ?? 0}</div>
                   <div className="text-xs text-emerald-100 font-semibold uppercase tracking-wider">Active Cases</div>
                 </div>
               </div>
@@ -1243,9 +1821,9 @@ export default function Profile() {
                     <label className="block text-sm font-bold text-slate-900 mb-2">Full name</label>
                     <input
                       type="text"
-                      value={user.firstName}
-                      onChange={(e) => setUser((p) => ({ ...p, firstName: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+                      value={firstName}
+                      onChange={(e) => setProfile((p) => ({ ...p, firstName: e.target.value }))}
+                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
                       required
                     />
                   </div>
@@ -1254,9 +1832,9 @@ export default function Profile() {
                     <label className="block text-sm font-bold text-slate-900 mb-2">Contact</label>
                     <input
                       type="tel"
-                      value={user.contact}
-                      onChange={(e) => setUser((p) => ({ ...p, contact: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+                      value={contact}
+                      onChange={(e) => setProfile((p) => ({ ...p, contact: e.target.value }))}
+                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
                       required
                     />
                   </div>
@@ -1265,9 +1843,9 @@ export default function Profile() {
                     <label className="block text-sm font-bold text-slate-900 mb-2">Aadhar (optional)</label>
                     <input
                       type="text"
-                      value={user.aadhar || ""}
-                      onChange={(e) => setUser((p) => ({ ...p, aadhar: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
+                      value={aadhar || ""}
+                      onChange={(e) => setProfile((p) => ({ ...p, aadhar: e.target.value }))}
+                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-50 border-2 border-slate-200 focus:border-emerald-400 outline-none transition font-medium"
                       maxLength={12}
                     />
                   </div>
@@ -1276,9 +1854,9 @@ export default function Profile() {
                     <label className="block text-sm font-bold text-slate-900 mb-2">Role</label>
                     <input
                       type="text"
-                      value={user.role}
+                      value={role}
                       readOnly
-                      className="w-full px-4 py-3 rounded-2xl bg-slate-100 border-2 border-slate-200 font-medium text-slate-500"
+                      className="text-black w-full px-4 py-3 rounded-2xl bg-slate-100 border-2 border-slate-200 font-medium text-slate-500"
                     />
                   </div>
                 </div>
@@ -1291,7 +1869,7 @@ export default function Profile() {
                         key={skill}
                         type="button"
                         onClick={() => toggleSkill(skill)}
-                        className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
+                        className={`text-black px-4 py-2 rounded-full text-sm font-bold transition-all ${
                           skills.includes(skill)
                             ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
                             : "bg-white border-2 border-slate-300 text-slate-700 hover:border-emerald-400"
@@ -1309,7 +1887,7 @@ export default function Profile() {
                     <input
                       type="text"
                       value={
-                        user.location?.coordinates ? `${user.location.coordinates[0]}, ${user.location.coordinates[1]}` : ""
+                        location?.coordinates ? `${location.coordinates[0]}, ${location.coordinates[1]}` : ""
                       }
                       onChange={(e) => {
                         const raw = e.target.value;
@@ -1318,7 +1896,7 @@ export default function Profile() {
                           const lng = Number(parts[0]);
                           const lat = Number(parts[1]);
                           if (!isNaN(lng) && !isNaN(lat)) {
-                            setUser((p) => ({ ...p, location: { type: "Point", coordinates: [lng, lat] } }));
+                            setProfile((p) => ({ ...p, location: { type: "Point", coordinates: [lng, lat] } }));
                           }
                         }
                       }}
@@ -1384,7 +1962,7 @@ export default function Profile() {
           </div>
 
           <div className="text-sm text-slate-500 font-medium">
-            Member since: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "—"}
+            Member since: {createdAt ? new Date(createdAt).toLocaleDateString() : "—"}
           </div>
         </div>
       </div>

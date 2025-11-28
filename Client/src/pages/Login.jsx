@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, CheckCircle, Shield, Zap } from "lucide-react";
 import { useForm } from 'react-hook-form';

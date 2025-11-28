@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Bell, Menu, X, Search, User, ChevronDown } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../store/authSlice";
 
 export default function AppHeader({ user = {}, onSearch = () => {} }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
   const navigate = useNavigate();
@@ -50,8 +49,19 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
               </div>
             </div>
           </div>
-
+  
           <div className="flex items-center gap-3">
+              <nav className="flex items-center gap-6 text-sm font-medium">
+                <Link to="/jobpage" className="text-slate-700 hover:text-teal-600 transition">
+                  Jobs
+                </Link>
+                <Link to="/featurespage" className="text-slate-700 hover:text-teal-600 transition">
+                  Features
+                </Link>
+                <Link to="/aboutpage" className="text-slate-700 hover:text-teal-600 transition">
+                  About
+                </Link>
+              </nav>
             <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition" aria-label="Notifications" onClick={() => navigate("/notifications")}>
               <Bell className="w-5 h-5 text-slate-700 dark:text-slate-200" />
             </button>
@@ -75,32 +85,16 @@ export default function AppHeader({ user = {}, onSearch = () => {} }) {
 
               {profileOpen && (
                 <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 py-1 z-50">
-                  <button onClick={() => { setProfileOpen(false); navigate("/profile"); }} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Profile</button>
-                  <button onClick={() => { setProfileOpen(false); navigate("/settings"); }} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Settings</button>
-                  <button onClick={() => { setProfileOpen(false); navigate("/home"); }} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Dashboard</button>
+                  <button onClick={() => { setProfileOpen(false); navigate("/user/dashboard"); }} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Profile</button>
+                  <button onClick={() => { setProfileOpen(false); navigate("/user/profile"); }} className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Settings</button>
                   <div className="border-t my-1 border-slate-100 dark:border-gray-800" />
                   <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-rose-600 hover:bg-slate-50">Logout</button>
                 </div>
               )}
             </div>
 
-            <div className="sm:hidden">
-              <button onClick={() => setMobileOpen(s => !s)} className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-gray-800 transition">
-                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
           </div>
         </div>
-
-        {mobileOpen && (
-          <div className="sm:hidden px-4 pb-4 border-t border-slate-200 dark:border-gray-800">
-            <div className="py-2 space-y-2">
-              <button onClick={() => { setMobileOpen(false); navigate("/jobs"); }} className="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100">Jobs</button>
-              <button onClick={() => { setMobileOpen(false); navigate("/applications"); }} className="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100">Applications</button>
-              <button onClick={() => { setMobileOpen(false); navigate("/disputes"); }} className="block w-full text-left px-3 py-2 rounded-lg hover:bg-slate-100">Disputes</button>
-            </div>
-          </div>
-        )}
       </div>
     </header>
   );

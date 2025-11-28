@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import {Link} from 'react-router-dom'
 import { MapPin, Navigation, Search, Filter, Clock, CheckCircle, Star, MessageSquare, FileText, AlertTriangle, DollarSign, User } from "lucide-react";
 
 const SAMPLE_JOBS = [
@@ -197,7 +198,7 @@ function JobCard({ job, onView, onApply }) {
   );
 }
 
-export default function LaborerPlatform() {
+export default function JobPage() {
   const [query, setQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [nearbyRadius, setNearbyRadius] = useState(10);
@@ -441,30 +442,30 @@ export default function LaborerPlatform() {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => setView("applications")}
+                <Link
+                  to="/application"
                   className="px-4 py-3 rounded-2xl border-2 border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
                 >
                   Applications
-                </button>
-                <button
-                  onClick={() => setView("profile")}
+                </Link>
+                <Link
+                  to="/user/profile"
                   className="px-4 py-3 rounded-2xl border-2 border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
                 >
                   Profile
-                </button>
-                <button
-                  onClick={() => setView("dispute")}
+                </Link>
+                <Link
+                  to="/dispute"
                   className="px-4 py-3 rounded-2xl border-2 border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
                 >
                   Disputes
-                </button>
-                <button
-                  onClick={() => alert("Contact support")}
+                </Link>
+                <Link
+                  to="/faq"
                   className="px-4 py-3 rounded-2xl border-2 border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
                 >
                   Help
-                </button>
+                </Link>
               </div>
             </div>
 

@@ -33,7 +33,7 @@ const Typewriter = ({ phrases = [], speed = 60, pause = 1500, className = "" }) 
   );
 };
 
-const How = () => {
+const FeaturesPage = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
  
@@ -74,7 +74,7 @@ const How = () => {
               <Link to="/login" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-2xl hover:shadow-emerald-500/50 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 hover:scale-105">
                 <Sparkles className="w-5 h-5" /> Get Started
               </Link>
-              <Link to="/features" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-bold transition-all duration-300 hover:scale-105">
+              <Link to="/howitwork" className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border-2 border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-bold transition-all duration-300 hover:scale-105">
                 Learn How It Works
               </Link>
             </div>
@@ -462,4 +462,4 @@ const Accordion = ({ q, a }) => {
   );
 };
 
-export default How;
+export default FeaturesPage;

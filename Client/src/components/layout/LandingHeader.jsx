@@ -35,13 +35,13 @@ export default function LandingHeader() {
 
           <div className="hidden md:flex items-center gap-6">
             <nav className="flex items-center gap-6 text-sm font-medium">
-              <Link to="/labour" className="text-slate-700 hover:text-teal-600 transition">
+              <Link to="/jobpage" className="text-slate-700 hover:text-teal-600 transition">
                 Jobs
               </Link>
-              <Link to="/features" className="text-slate-700 hover:text-teal-600 transition">
+              <Link to="/featurespage" className="text-slate-700 hover:text-teal-600 transition">
                 Features
               </Link>
-              <Link to="/about" className="text-slate-700 hover:text-teal-600 transition">
+              <Link to="/aboutpage" className="text-slate-700 hover:text-teal-600 transition">
                 About
               </Link>
             </nav>
