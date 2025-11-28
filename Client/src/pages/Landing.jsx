@@ -164,7 +164,6 @@ export default function Landing() {
       </section>
 
 
-       {/* Featured Jobs Section */}
       <section id="jobs" className="max-w-7xl mx-auto px-4 py-20">
         <div className="flex items-center justify-between mb-10">
           <div>
@@ -189,8 +188,7 @@ export default function Landing() {
           )}
         </div>
       </section>
-      
-      {/* Features Section */}
+ 
       <section id="features" className="max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-black text-slate-900 mb-4">What We Offer</h2>
