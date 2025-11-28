@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bell, Menu, X, User, LogOut, Settings, Home, ChevronDown, Sun, Moon, Search } from "lucide-react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function IconButton({ children, onClick, badge }) {
   return (
@@ -120,11 +120,12 @@ function StatCard({ title, value, delta }) {
   );
 }
 
-export default function Hhome() {
+export default function HomePage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [query, setQuery] = useState("");
   const [user] = useState({ firstName: "Demo" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isDark) document.documentElement.classList.add("dark");

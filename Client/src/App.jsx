@@ -3,7 +3,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import How from './components/How';
 import Landing from './pages/Landing';
-import Home from './pages/Home';
+import HomePage from './pages/Home';
 import { checkAuth } from './store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -40,15 +40,15 @@ function App() {
         <Route path="/" element={<Landing />}></Route>
        
         <Route path="/login"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
         ></Route>
 
         <Route path="/signup"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Signup />}
+          element={isAuthenticated ? <Navigate to="/" /> : <Signup />}
         ></Route>
 
         <Route path="/home" 
-          element={isAuthenticated ? <Home/> : <Signup />} 
+          element={isAuthenticated ? <HomePage/> : <Signup />} 
         ></Route>
 
         <Route path="/features"
@@ -60,7 +60,7 @@ function App() {
         ></Route>
 
         <Route path="/jobs"
-          element={<Jobs/>}
+          element={isAuthenticated ? <Jobs/> : <Navigate to="/login" />}
         ></Route>
 
         <Route path="/jobsdetails"
@@ -81,7 +81,7 @@ function App() {
         ></Route>
 
         <Route path="/applicationform"
-          element={<ApplicationForm/>}
+          element={isAuthenticated ? <ApplicationForm/> : <Navigate to="/login" />}
         ></Route>
 
         <Route path="/profile"
