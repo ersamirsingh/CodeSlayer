@@ -1,14 +1,44 @@
 import mongoose from 'mongoose';
 
 const jobSchema = new mongoose.Schema({
-    title: String,
-    description: String,
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    category: {
+        type: String,
+        default: 'General'
+    },
+    employmentType: {
+        type: String,
+        default: 'Full-time'
+    },
     wage: Number,
-    skills: [String],
+    salaryMin: Number,
+    salaryMax: Number,
+    payFrequency: {
+        type: String,
+        default: 'Daily'
+    },
+    experienceLevel: {
+        type: String,
+        default: 'Entry Level'
+    },
+    locationText: String,
+    skills: {
+        type: [String],
+        default: []
+    },
     employer: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     },
-    applicant: [{
+    applicants: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
     }],
     assignedLaborer: {
@@ -29,6 +59,23 @@ const jobSchema = new mongoose.Schema({
             type: [Number],
             default: [0,0]
         }
+    },
+    applications: {
+        type: [{
+            applicant: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            fullName: String,
+            contactNumber: String,
+            experience: String,
+            message: String,
+            submittedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }],
+        default: []
     }
 }, {timestamps: true});
 

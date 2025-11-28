@@ -9,7 +9,7 @@ const authenticateUser = async (req, res, next)=>{
 
    try {
         
-      const {Token} = req.cookies
+      const {Token} = req.cookies || {}
       // console.log(Token)
 
       if(!Token)

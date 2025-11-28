@@ -8,7 +8,7 @@ const authenticateAdmin = async (req, res, next)=>{
 
    try {
     
-      const {Token} = req.cookies
+      const {Token} = req.cookies || {}
 
 
       if(!Token)

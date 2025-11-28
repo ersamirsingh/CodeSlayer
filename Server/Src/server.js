@@ -8,6 +8,7 @@ import cors from 'cors'
 import authRouter from './Router/AuthRouter.js'
 import userRouter from './Router/UserRouter.js'
 import adminRouter from './Router/AdminRouter.js'
+import jobRouter from './Router/JobRouter.js'
 import cookieParser from 'cookie-parser'
 
 
@@ -25,6 +26,7 @@ app.use(cors({
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/admin', adminRouter)
+app.use('/jobs', jobRouter)
 
 
 
