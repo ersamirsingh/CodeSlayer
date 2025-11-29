@@ -97,9 +97,9 @@ export default function JobCard({ job }) {
             </span>
           </div>
           
-          <Link to="/employplatform" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 group-hover:scale-105">
+          <button  onClick={() => alert("Applied Sucessfully")} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 group-hover:scale-105">
             Apply <ArrowRight className="w-4 h-4" />
-          </Link>
+          </button>
         </div>
       </div>
     </article>

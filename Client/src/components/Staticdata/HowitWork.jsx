@@ -485,7 +485,7 @@ export default function HowItWorks() {
   const currentFlow = flowContent[activeFlow];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <main className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-50">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-emerald-500 rounded-full blur-3xl opacity-5" />
@@ -496,11 +496,11 @@ export default function HowItWorks() {
         {/* Hero Section */}
         <section className="grid gap-12 lg:grid-cols-2 items-center mb-16">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-100 to-teal-100 text-emerald-700 font-bold text-sm mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-emerald-100 to-teal-100 text-emerald-700 font-bold text-sm mb-6">
               <Sparkles className="w-4 h-4" />
               How KaamSetu Works
             </div>
-            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent leading-tight mb-6">
+            <h1 className="text-4xl lg:text-5xl font-black bg-linear-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent leading-tight mb-6">
               A simple, trust-first workflow for rural labor hiring.
             </h1>
             <p className="text-lg text-slate-600 mb-8">
@@ -531,21 +531,21 @@ export default function HowItWorks() {
                 <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Platform Snapshot</p>
                 <p className="text-xl font-black text-slate-900">End-to-end labor lifecycle</p>
               </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-slate-900 to-slate-800 text-white text-xs font-bold">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-slate-900 to-slate-800 text-white text-xs font-bold">
                 Live Prototype <ArrowRight className="w-3 h-3" />
               </div>
             </div>
             
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 p-4 text-center border border-emerald-200">
+              <div className="rounded-2xl bg-linear-to-br from-emerald-50 to-teal-50 p-4 text-center border border-emerald-200">
                 <p className="text-xs text-slate-600 font-semibold mb-2">Workers onboarded</p>
                 <p className="text-2xl font-black text-emerald-700">+120</p>
               </div>
-              <div className="rounded-2xl bg-gradient-to-br from-teal-50 to-cyan-50 p-4 text-center border border-teal-200">
+              <div className="rounded-2xl bg-linear-to-br from-teal-50 to-cyan-50 p-4 text-center border border-teal-200">
                 <p className="text-xs text-slate-600 font-semibold mb-2">Jobs managed</p>
                 <p className="text-2xl font-black text-teal-700">+80</p>
               </div>
-              <div className="rounded-2xl bg-gradient-to-br from-cyan-50 to-blue-50 p-4 text-center border border-cyan-200">
+              <div className="rounded-2xl bg-linear-to-br from-cyan-50 to-blue-50 p-4 text-center border border-cyan-200">
                 <p className="text-xs text-slate-600 font-semibold mb-2">Mediated disputes</p>
                 <p className="text-2xl font-black text-cyan-700">✓ Resolved</p>
               </div>
@@ -581,13 +581,13 @@ export default function HowItWorks() {
               return (
                 <div
                   key={s.id}
-                  className="group relative bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden hover:scale-105"
+                  className="group relative bg-linear-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-lg hover:shadow-2xl transition-all duration-500 p-6 overflow-hidden hover:scale-105"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-500" />
+                  <div className="absolute inset-0 bg-linear-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-500" />
                   
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-100 text-emerald-700 flex items-center justify-center text-lg font-black shadow-lg">
+                      <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 text-emerald-700 flex items-center justify-center text-lg font-black shadow-lg">
                         {s.id}
                       </div>
                     </div>
@@ -610,7 +610,7 @@ export default function HowItWorks() {
                 onClick={() => setActiveFlow("worker")}
                 className={`px-5 py-2.5 rounded-xl flex items-center gap-2 font-bold text-sm transition-all ${
                   activeFlow === "worker" 
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
+                    ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
                     : "text-slate-600 hover:bg-slate-50"
                 }`}
               >
@@ -620,7 +620,7 @@ export default function HowItWorks() {
                 onClick={() => setActiveFlow("employer")}
                 className={`px-5 py-2.5 rounded-xl flex items-center gap-2 font-bold text-sm transition-all ${
                   activeFlow === "employer" 
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
+                    ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
                     : "text-slate-600 hover:bg-slate-50"
                 }`}
               >
@@ -630,7 +630,7 @@ export default function HowItWorks() {
                 onClick={() => setActiveFlow("mediation")}
                 className={`px-5 py-2.5 rounded-xl flex items-center gap-2 font-bold text-sm transition-all ${
                   activeFlow === "mediation" 
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
+                    ? "bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-lg" 
                     : "text-slate-600 hover:bg-slate-50"
                 }`}
               >
@@ -641,7 +641,7 @@ export default function HowItWorks() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {/* Main Content */}
-            <div className="md:col-span-2 bg-gradient-to-br from-white to-slate-50 rounded-3xl shadow-xl border border-slate-200 p-8">
+            <div className="md:col-span-2 bg-linear-to-br from-white to-slate-50 rounded-3xl shadow-xl border border-slate-200 p-8">
               <p className="text-xs font-black text-emerald-600 mb-2 uppercase tracking-wider">
                 {currentFlow.title}
               </p>
@@ -653,7 +653,7 @@ export default function HowItWorks() {
               <ol className="space-y-4 mb-6">
                 {currentFlow.bullets.map((b, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-sm text-slate-700">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-emerald-100 to-teal-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-linear-to-br from-emerald-100 to-teal-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
                       {idx + 1}
                     </span>
                     <span className="leading-relaxed">{b}</span>
@@ -661,8 +661,8 @@ export default function HowItWorks() {
                 ))}
               </ol>
 
-              <div className="rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 flex items-start gap-3">
-                <CheckCircle className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="rounded-2xl bg-linear-to-r from-slate-900 to-slate-800 text-white p-6 flex items-start gap-3">
+                <CheckCircle className="w-6 h-6 text-emerald-400 shrink-0 mt-0.5" />
                 <p className="text-sm leading-relaxed">{currentFlow.highlight}</p>
               </div>
             </div>
@@ -701,7 +701,7 @@ export default function HowItWorks() {
             <p className="text-sm text-slate-600 font-medium">From posting to completion and rating.</p>
           </div>
           
-          <div className="bg-gradient-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-xl p-8">
+          <div className="bg-linear-to-br from-white to-slate-50 rounded-3xl border border-slate-200 shadow-xl p-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <TimelineItem 
                 label="1. Post" 
@@ -733,7 +733,7 @@ export default function HowItWorks() {
 
         {/* CTA */}
         <section className="mb-8">
-          <div className="relative overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 text-white shadow-2xl">
+          <div className="relative overflow-hidden bg-linear-to-r from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 text-white shadow-2xl">
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500 rounded-full blur-3xl" />
@@ -752,7 +752,7 @@ export default function HowItWorks() {
               <div className="flex gap-3">
                 <button
                   onClick={() => window.location.assign("/signup")}
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
                 >
                   Get Started <ArrowRight className="w-4 h-4" />
                 </button>
@@ -777,9 +777,9 @@ export default function HowItWorks() {
 
 function MiniInfoCard({ icon: Icon, title, text, gradient }) {
   return (
-    <div className="bg-gradient-to-br from-white to-slate-50 rounded-2xl border border-slate-200 shadow-lg p-5 hover:shadow-xl transition-all">
+    <div className="bg-linear-to-br from-white to-slate-50 rounded-2xl border border-slate-200 shadow-lg p-5 hover:shadow-xl transition-all">
       <div className="flex items-start gap-3">
-        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 shadow-lg`}>
+        <div className={`w-10 h-10 rounded-xl bg-linear-to-br ${gradient} flex items-center justify-center shrink-0 shadow-lg`}>
           <Icon className="w-5 h-5 text-white" />
         </div>
         <div>
@@ -794,7 +794,7 @@ function MiniInfoCard({ icon: Icon, title, text, gradient }) {
 function TimelineItem({ label, title, text, gradient }) {
   return (
     <div className="relative">
-      <div className={`inline-flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br ${gradient} text-white font-black text-sm mb-4 shadow-lg`}>
+      <div className={`inline-flex items-center justify-center w-8 h-8 rounded-xl bg-linear-to-br ${gradient} text-white font-black text-sm mb-4 shadow-lg`}>
         {label[0]}
       </div>
       <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">{label}</p>
