@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from "react";
 import {Link} from 'react-router-dom'
 import { MapPin, Navigation, Search, Filter, Clock, CheckCircle, Star, MessageSquare, FileText, AlertTriangle, DollarSign, User } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SAMPLE_JOBS = [
   {
@@ -134,6 +136,10 @@ function Header({ query, setQuery, onNearMe, onToggleFilters, showFilters }) {
 }
 
 function JobCard({ job, onView, onApply }) {
+
+  const {isAuthenticated} = useSelector(state=>state.auth)
+  const navigate = useNavigate()
+
   return (
     <article
       className="group relative bg-linear-to-br from-white to-slate-50 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 border border-slate-200 overflow-hidden hover:scale-[1.02] cursor-pointer"
@@ -181,7 +187,7 @@ function JobCard({ job, onView, onApply }) {
 
         <div className="flex gap-3">
           <button
-            onClick={() => onApply(job.id)}
+            onClick={() =>  isAuthenticated ? onApply(job.id) : navigate('/login')}
             className="flex-1 py-3 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all"
           >
             Apply Now
@@ -205,6 +211,8 @@ export default function JobPage() {
   const [selectedPay, setSelectedPay] = useState("any");
   const [view, setView] = useState("feed");
   const [selectedJob, setSelectedJob] = useState(null);
+  const {isAuthenticated} = useSelector(state=>state.auth)
+  const navigate = useNavigate()
 
   const filteredJobs = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -317,7 +325,7 @@ export default function JobPage() {
 
               <div className="flex gap-4">
                 <button
-                  onClick={() => handleApply(selectedJob.id)}
+                  onClick={() =>  isAuthenticated ?  handleApply(selectedJob.id) : navigate('/login')}
                   className="flex-1 py-4 rounded-2xl bg-linear-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-teal-600 transition-all"
                 >
                   Apply

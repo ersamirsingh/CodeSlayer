@@ -74,7 +74,7 @@ function App() {
         ></Route>
 
         <Route path="/jobpost"
-          element={<JobPost/>}
+          element={isAuthenticated ? <JobPost/> : <Navigate to="/login"/>}
         ></Route>
 
         {/* <Route
